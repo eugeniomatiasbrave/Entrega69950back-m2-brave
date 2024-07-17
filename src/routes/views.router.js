@@ -3,7 +3,15 @@ import {productsService} from "../managers/index.js";
 
 const router = Router();
 
-router.get("/", async (req, res) => {
+router.get('/',(req,res)=>{
+    res.render('Home');
+});
+
+router.get('/register',(req,res)=>{
+    res.render('Register');
+})
+
+router.get("/products", async (req, res) => {
 	const page = parseInt(req.query.page) || 1;
 	const limit = parseInt(req.query.limit) || 4;
 	const sort = req.query.sort || "asc";
@@ -17,7 +25,7 @@ router.get("/", async (req, res) => {
 		return res.render('404')
 	}
 
-	res.render("Home", { 
+	res.render("Products", { 
 		products, 
 		page: currentPage,
 		hasPrevPage, 
@@ -28,7 +36,8 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/realtimeproducts", async (req, res) => {
-	res.render("realTimeProducts")
+	res.render("RealTimeProducts")
 });
+
 
 export default router;
