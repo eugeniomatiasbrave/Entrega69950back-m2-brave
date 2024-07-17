@@ -1,0 +1,193 @@
+// PREENTREGA MODULO 2 //
+
+
+
+// ENTREGA FINAL MODULO 1 ///
+
+Formato
+ OK. Link al repositorio de Github, sin la carpeta de node_modules
+
+Permitir comentarios en el archivo
+ OK. La lógica del negocio que ya tienes hecha no debería cambiar, sólo su persistencia.
+ OK. Los nuevos endpoints deben seguir la misma estructura y lógica que hemos seguido.
+
+Se debe entregar:
+
+ Modificar el método GET / para que cumpla con los siguientes puntos:
+ Deberá poder recibir por query params 
+  OK. Un limit (opcional) 
+     -limit permitirá devolver sólo el número de elementos solicitados al momento de la petición, en caso de no recibir limit, éste será de 10.
+  OK. Una page (Si o si)
+     -page permitirá devolver la página que queremos buscar, en caso de no recibir page, ésta será de 1
+  OK. Un sort (opcional) 
+     -sort: asc/desc, para realizar ordenamiento ascendente o descendente por precio, en caso de no recibir sort, no realizar ningún ordenamiento
+  OK. Un query (opcional)
+     -query, el tipo de elemento que quiero buscar (es decir, qué filtro aplicar), en caso de no recibir query, realizar la búsqueda general
+  
+
+Se debe entregar:
+
+ OK. El método GET de todos los productos deberá devolver un objeto con el siguiente formato:
+{
+status:success/error
+payload: Resultado de los productos solicitados
+totalPages: Total de páginas
+prevPage: Página anterior
+nextPage: Página siguiente
+page: Página actual
+hasPrevPage: Indicador para saber si la página previa existe
+hasNextPage: Indicador para saber si la página siguiente existe.
+prevLink: Link directo a la página previa (null si hasPrevPage=false)
+nextLink: Link directo a la página siguiente (null si hasNextPage=false)
+}
+
+
+OK. (Este punto es opcional) Se deberá poder buscar productos por categoría o por disponibilidad, y se deberá poder realizar 
+un ordenamiento de estos productos de manera ascendente o descendente por precio. 
+
+Se debe entregar: (no obligatorio)
+
+Además, agregar al router de carts los siguientes endpoints:
+ OK. DELETE api/carts/:cid/products/:pid deberá eliminar del carrito el producto seleccionado.
+ OK. PUT api/carts/:cid deberá actualizar todos los productos del carrito con un arreglo de productos.
+ OK. PUT api/carts/:cid/products/:pid deberá poder actualizar SÓLO la cantidad de ejemplares del producto por cualquier cantidad pasada desde req.body
+ OK. DELETE api/carts/:cid deberá eliminar todos los productos del carrito
+ OK. Esta vez, para el modelo de Carts, en su propiedad products, el id de cada producto generado dentro del array tiene que hacer referencia al modelo de Products.
+     Modificar la ruta /:cid para que al traer todos los productos, los traiga completos mediante un “populate”. 
+     De esta manera almacenamos sólo el Id, pero al solicitarlo podemos desglosar los productos asociados.
+
+Se debe entregar:
+
+ OK. Modificar la vista index.handlebars en el router de views ‘/products’, creada en la pre-entrega anterior, para visualizar todos los productos con su respectiva paginación. Además, cada producto mostrado puede resolverse de dos formas:
+
+(no pedido) Llevar a una nueva vista con el producto seleccionado con su descripción completa, detalles de precio, categoría, etc. 
+           Además de un botón para agregar al carrito.
+           Sugerencia de la ruta: “/products/:pid”.
+(no pedido) Contar con el botón de “agregar al carrito” directamente, sin necesidad de abrir una página adicional con los detalles del producto.
+
+(no pedido) Además, agregar una vista en ‘/carts/:cid (cartId) para visualizar un carrito específico, donde se deberán listar SOLO los productos que pertenezcan a dicho carrito
+
+Recuerda que tienes 10 días para entregar tu proyecto final.
+
+
+/// SEGUNDA PREENTREGA/////
+
+Consignas
+
+Configurar nuestro proyecto para que trabaje con:
+
+ OK dependencias Handlebars y websocket (socket.io).
+ OK __dirmame
+ 
+
+Aspectos a incluir
+
+Configurar
+OK  el servidor para integrar el motor de plantillas Handlebars
+OK  Crear una vista “home.handlebars” la cual contenga una lista de todos los productos agregados hasta el momento 
+OK  instalar un servidor de socket.io al mismo.
+
+
+
+OK  crear una vista “realTimeProducts.handlebars”, 
+OK  la cual estará en la ruta “/realtimeproducts” en nuestro views router, 
+OK  ésta contendrá la misma lista de productos, sin embargo, ésta trabajará sólo con websockets.
+
+Al trabajar con websockets, 
+
+OK  cada vez que creemos un producto nuevo, se debe actualizar automáticamente en dicha vista la lista.
+    cada vez que eliminemos un producto, se debe actualizar automáticamente en dicha vista la lista.
+
+
+Sugerencias
+
+Ya que la conexión entre una consulta HTTP y websocket no está contemplada dentro de la clase. Se recomienda que
+para la creación de un producto se creen un formulario simple y para su eliminación que se añada un botón “Eliminar” 
+en cada producto en la vista  realTimeProducts.handlebars. Para que el contenido se gestione desde websockets y no HTTP.
+Para la creación del producto no es necesario añadir el dato “thumbnails”. Es decir, el envío de archivos desde el navegador.
+
+
+Si se desea hacer con HTTP, deberás buscar la forma de utilizar el servidor de Sockets dentro de la petición POST.
+
+Formato de entrega
+Link al repositorio de Github, el cual debe contar con todo el proyecto.
+No incluir node_modules
+
+
+
+
+
+
+
+
+
+//// PRIMERA PREENTREGA ////
+
+Consignas
+
+OK. Desarrollar el servidor basado en Node.JS y express, que escuche en el puerto 8080.
+OK. Que disponga de dos grupos de rutas: /products y /carts. 
+
+OK. Dichos endpoints estarán implementados con el router de express.
+
+    Especificaciones:
+
+OK. router en /api/products/ 
+
+Rutas:
+
+OK. La ruta raíz GET / deberá listar todos los productos de la base(o sea todos los productos del Archivo).
+
+    OK.  ?Limit=
+
+OK. La ruta GET /:pid deberá traer sólo el producto con el id proporcionado.
+
+    OK. Validar que sea solo numero.
+
+    OK. Error al no encontrar el producto.
+
+
+OK. La ruta raíz POST / deberá agregar un nuevo producto con los campos:
+    id: Number/String (A tu elección, el id NO se manda desde body, 
+    se autogenera como lo hemos visto desde los primeros entregables, asegurando que NUNCA se repetirán los ids en el archivo.
+
+       title:String,
+       description:String
+       code:String
+       price:Number
+  OK.  status:Boolean
+       stock:Number
+       category:String
+  OK.  thumbnail:Array de Strings que contengan las rutas donde están almacenadas las imágenes referentes a dicho producto.
+
+OK. La ruta PUT /:pid deberá tomar un producto y actualizarlo por los campos enviados desde body.
+    NUNCA se debe actualizar o eliminar el id al momento de hacer dicha actualización.
+
+OK. La ruta DELETE /:pid deberá eliminar el producto con el pid indicado. 
+
+
+OK. Para el carrito, el cual tendrá su router en /api/carts/, configurar dos rutas:
+
+OK. La ruta raíz POST / deberá crear un nuevo carrito con la siguiente estructura:
+    Id:Number/String (A tu elección, de igual manera como con los productos, debes asegurar que nunca se dupliquen 
+    los ids y que este se autogenere).
+    products: Array que contendrá objetos que representen cada producto
+
+OK. La ruta GET /:cid deberá listar los productos que pertenezcan al carrito con el parámetro cid proporcionados.
+OK. La ruta POST /:cid/product/:pid deberá agregar el producto al arreglo “products” del carrito seleccionado, 
+    agregándose como un objeto bajo el siguiente formato:
+
+  OK - product: SÓLO DEBE CONTENER EL ID DEL PRODUCTO (Es crucial que no agregues el producto completo)
+  OK - quantity: debe contener el número de ejemplares de dicho producto. 
+
+OK. El producto, de momento, se agregará de uno en uno.
+   OK. Además, si un producto ya existente intenta agregarse al producto, incrementar el campo quantity de dicho producto. 
+
+OK. La persistencia de la información se implementará utilizando el file system, donde los archivos: 
+    “products.json” y “carts.json” respaldarán la información. 
+     
+
+Formato
+
+OK. Link al repositorio de Github con el proyecto completo, sin la carpeta de Node_modules.
+
