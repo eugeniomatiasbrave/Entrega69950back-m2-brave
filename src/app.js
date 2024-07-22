@@ -3,7 +3,7 @@ import handlebars from 'express-handlebars';
 import mongoose from 'mongoose';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
-//import passport from 'passport';
+import passport from 'passport';
 
 import { Server } from "socket.io";
 import __dirname from './utils.js';
@@ -12,6 +12,7 @@ import viewsRouter from './routes/views.router.js';
 import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/carts.router.js';
 import sessionsRouter from './routes/sessions.router.js';
+import initializePassportConfig from './config/passport.config.js';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -27,13 +28,15 @@ const io = new Server(server);
 app.engine('handlebars', handlebars.engine());
 app.set('views', `${__dirname}/views`);
 app.set('view engine', 'handlebars');
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/public`));
 
 app.use(session({
     secret:"=)378!122asdzxc3",
     resave:false,
     saveUninitialized:false,
-    //store: new FileStorage({path:`${__dirname}/sessions`,ttl:20,reapInterval:10})
     store:MongoStore.create({
         mongoUrl:CONNECTION_STRING,
         ttl:60*60*24
@@ -45,8 +48,10 @@ app.use((req,res,next)=>{
     next();
 })
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+//Passport Configuración
+initializePassportConfig();
+app.use(passport.initialize());
+app.use(passport.session()); // porque passport trabaja con express-session, sino quito esta linea.
 
 //Rutas Vistas
 app.use('/', viewsRouter);

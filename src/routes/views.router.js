@@ -9,7 +9,20 @@ router.get('/',(req,res)=>{
 
 router.get('/register',(req,res)=>{
     res.render('Register');
-})
+});
+
+router.get('/login',(req,res)=>{
+    res.render('Login');
+});
+
+router.get('/profile',(req,res)=>{
+	if(!req.user){
+        return res.redirect('/login')
+    }
+    res.render('Profile',{
+        user:req.user 
+    });
+});
 
 router.get("/products", async (req, res) => {
 	const page = parseInt(req.query.page) || 1;
@@ -19,11 +32,11 @@ router.get("/products", async (req, res) => {
 	const productsPaginate = await productsService.getProducts(page, limit, sort);
 	const products = productsPaginate.docs;
 	const {hasPrevPage, hasNextPage, prevPage,nextPage, page:currentPage} = productsPaginate;
-	console.log(productsPaginate)
+	console.log(productsPaginate);
 
 	if (!products) {
 		return res.render('404')
-	}
+	};
 
 	res.render("Products", { 
 		products, 
@@ -36,7 +49,7 @@ router.get("/products", async (req, res) => {
 });
 
 router.get("/realtimeproducts", async (req, res) => {
-	res.render("RealTimeProducts")
+	res.render("RealTimeProducts");
 });
 
 
