@@ -1,5 +1,5 @@
 import { Router } from "express";
-import passport from "passport";
+
 import jwt from 'jsonwebtoken';
 import { passportCall } from "../middlewares/passportCall.js";
 
