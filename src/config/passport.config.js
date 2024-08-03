@@ -1,10 +1,9 @@
 import passport from "passport";
-import local from 'passport-local';
+import { Strategy as LocalStrategy } from "passport-local";
+import { ExtractJwt, Strategy as JWTStrategy} from "passport-jwt";
 
 import { usersService } from "../managers/index.js";
 import AuthService from "../services/AuthService.js";
-
-const LocalStrategy = local.Strategy;
 
 const initializePassportConfig = () =>{
     passport.use('register', new LocalStrategy({usernameField:'email',passReqToCallback:true},async (req,email,password,done)=>{
@@ -29,12 +28,9 @@ const initializePassportConfig = () =>{
             birthDate:parsedDate,
             password:hashedPassword
         }
-
         const result = await usersService.createUser(newUser);
-        return done(null,result._id);
+        return done(null,result);
     }))
-
-
     passport.use('login', new LocalStrategy({usernameField:'email'},async(email,password,done)=>{
         const user = await usersService.getUserByEmail(email);
         if(!user){
@@ -46,22 +42,20 @@ const initializePassportConfig = () =>{
             return done(null,false,{message:"Incorrect credentials"});
         }
         //Ya no creo la sesión aquí
-        return done(null,user._id);
+        return done(null,user);
     }))
+    passport.use('current',new JWTStrategy({
+        secretOrKey:'secretitoshhhhh',
+        jwtFromRequest:ExtractJwt.fromExtractors([cookieExtractor])
+    },async(payload,done)=>{
+        console.log(payload);
+        return done(null,payload);
+    }))
+}
 
-    passport.serializeUser((userId,done)=>{
-        //Serializar un usuario significa, brindar el dato necesario para que passport pueda OBTENER después al usuario completo
-        done(null,userId);
-    })
 
-    passport.deserializeUser(async(userId,done)=>{
-        const user = await usersService.getUserById(userId);
-        const userSession = {
-            name: `${user.firstName} ${user.lastName}`,
-            role: user.role
-        }
-        done(null,userSession);
-    })
+function cookieExtractor(req){
+    return req?.cookies?.['tokencito'];
 }
 
 export default initializePassportConfig;

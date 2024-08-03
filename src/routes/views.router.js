@@ -1,4 +1,5 @@
 import { Router } from "express";
+import passport from "passport";
 import {productsService} from "../managers/index.js";
 
 const router = Router();
@@ -7,22 +8,24 @@ router.get('/',(req,res)=>{
     res.render('Home');
 });
 
-router.get('/register',(req,res)=>{
+router.get('/register', (req,res)=>{
     res.render('Register');
 });
 
-router.get('/login',(req,res)=>{
+router.get('/login', (req,res)=>{
     res.render('Login');
 });
 
-router.get('/profile',(req,res)=>{
-	if(!req.user){
+router.get('/profile',passport.authenticate('current',{session:false}),(req,res)=>{
+    console.log(req.user);
+
+    if(!req.user){
         return res.redirect('/login')
     }
     res.render('Profile',{
-        user:req.user 
-    });
-});
+        user: req.user
+    })
+})
 
 router.get("/products", async (req, res) => {
 	const page = parseInt(req.query.page) || 1;
