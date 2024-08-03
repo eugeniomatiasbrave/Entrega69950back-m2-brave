@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
-
 import { passportCall } from "../middlewares/passportCall.js";
 import BaseRouter from "./BaseRouter.js";
+
+const SECRET_KEY = 'choripa_con_chimichurry';
 
 class SessionsRouter extends BaseRouter {
     init(){
@@ -16,7 +17,7 @@ class SessionsRouter extends BaseRouter {
                 role:req.user.role,
                 id:req.user._id
             }
-            const token = jwt.sign(sessionUser,'secretitoshhhhh',{expiresIn:'1d'});
+            const token = jwt.sign(sessionUser, SECRET_KEY ,{expiresIn:'15d'});
             res.cookie('tokencito',token).send({status:"success",message:"logged in"});
         });
 

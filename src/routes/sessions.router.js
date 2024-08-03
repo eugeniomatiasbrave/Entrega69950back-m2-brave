@@ -1,10 +1,9 @@
 import { Router } from "express";
-
 import jwt from 'jsonwebtoken';
 import { passportCall } from "../middlewares/passportCall.js";
 
-//Un router de session se suele utilizar para operaciones concernientes a la sesión del usuario como:
-// Registro, Login, ThirdPartyAuth, Current (Acceder a la info de la sesión actual);
+
+const SECRET_KEY = 'choripa_con_chimichurry';
 
 const sessionsRouter = Router();
 
@@ -14,13 +13,13 @@ sessionsRouter.post('/register',passportCall('register'),async(req,res)=>{
 
 sessionsRouter.post('/login',passportCall('login'),async(req,res)=>{
     console.log(req.user);
-    //Para JWT, ahora yo tengo la responsabilidad de generar mi propia sesión.
+    
     const sessionUser = {
         name:`${req.user.firstName} ${req.user.lastName}`,
         role:req.user.role,
         id:req.user._id
     }
-    const token = jwt.sign(sessionUser,'secretitoshhhhh',{expiresIn:'1d'});
+    const token = jwt.sign(sessionUser, SECRET_KEY ,{expiresIn:'15d'});
     res.cookie('tokencito',token).send({status:"success",message:"logged in"});
 })
 

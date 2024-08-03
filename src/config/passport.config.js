@@ -5,6 +5,8 @@ import { ExtractJwt, Strategy as JWTStrategy} from "passport-jwt";
 import { usersService } from "../managers/index.js";
 import AuthService from "../services/AuthService.js";
 
+const SECRET_KEY = 'choripa_con_chimichurry'; 
+
 const initializePassportConfig = () =>{
     passport.use('register', new LocalStrategy({usernameField:'email',passReqToCallback:true},async (req,email,password,done)=>{
         const {firstName,lastName,birthDate} = req.body;
@@ -45,7 +47,7 @@ const initializePassportConfig = () =>{
         return done(null,user);
     }))
     passport.use('current',new JWTStrategy({
-        secretOrKey:'secretitoshhhhh',
+        secretOrKey: SECRET_KEY,
         jwtFromRequest:ExtractJwt.fromExtractors([cookieExtractor])
     },async(payload,done)=>{
         console.log(payload);
