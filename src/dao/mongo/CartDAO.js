@@ -1,22 +1,22 @@
 import cartModel from './models/cart.model.js';
 
-export default class ManagersCarts {
+export default class CartDAO {
 	
-	getCarts( opts={}) { 
+	get( opts={}) { 
         return cartModel.find( opts ).lean(); // Busca todos
 	}
 
-    getCartById (cid) {
+    getBy (cid) {
 		return cartModel.findOne( {_id: cid}).lean(); // Busca solo uno
 	};
 
-    createCart() {
+    create() {
         const newCart = new cartModel({ products: [] });
         return newCart.save();
     }
 
     // Método para agregar un producto al carrito seleccionado
-    addProductToCart(cid, product) {
+    add(cid, product) {
         return cartModel.findOneAndUpdate(
             { _id: String(cid), "products.product": product.product },
             { $inc: { "products.$.quantity": product.quantity } },
@@ -25,7 +25,7 @@ export default class ManagersCarts {
     };
 
     //Metodo elimina un product del carrito
-    deleteProductCart(cid, pid) {
+    delete(cid, pid) {
         return cartModel.updateOne(
             { _id: String(cid) },
             { $pull: { products: { _id: pid } } }
@@ -33,7 +33,7 @@ export default class ManagersCarts {
     };
 
     // Método deleteCard, no limina el carrito
-    deleteAllProductsCid(cid) {
+    deleteAll(cid) {
         return cartModel.updateOne(
             { _id: String(cid) },
             { $set: { products: [] } }
@@ -41,7 +41,7 @@ export default class ManagersCarts {
     };
 
 // Metodo para actualizar todos los productos
-    updateCart(cid, products) {
+    update(cid, products) {
         return cartModel.updateOne(
             { _id: String(cid) },
             { $set: { products: products } }
@@ -49,7 +49,7 @@ export default class ManagersCarts {
     };
 
 // Metodo para actualizar la cantidad del producto
-    updateProductQuantity(cid, pid, quantity) {
+    updateQuantity(cid, pid, quantity) {
         return cartModel.updateOne(
             { _id: String(cid), "products.product": pid },
             { $set: { "products.$.quantity": quantity } }

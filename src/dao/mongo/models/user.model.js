@@ -24,6 +24,11 @@ const schema = new mongoose.Schema({
 		type:String,
 		required:true
 	},
+	//agrega un cardId para relacionar con el carrito
+	cartId: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Carts'
+	},
 	role: {
 		type:String,
 		required:true,
@@ -31,6 +36,10 @@ const schema = new mongoose.Schema({
 		default:'user'
 	}
 });
+
+schema.pre(['find','findOne'], function(){
+	this.populate('cartId')
+})
 
 const userModel = mongoose.model(collection, schema);
 

@@ -6,23 +6,26 @@ import cookieParser from 'cookie-parser';
 
 import { Server } from "socket.io";
 import __dirname from './utils.js';
-import {productsService} from "./managers/index.js";
-import viewsRouter from './routes/views.router.js';
+import {productsService} from "./services/repositories.js";
+
 import ViewsRouter from './routes/ViewsRouter.js';
+import SessionsRouter from './routes/SessionsRouter.js';
 import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/carts.router.js';
-import sessionsRouter from './routes/sessions.router.js';
-import SessionsRouter from './routes/SessionsRouter.js';
+import usersRouter from './routes/users.router.js';
+
 import initializePassportConfig from './config/passport.config.js';
+import config from './config/config.js';
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+
+const PORT = config.app.PORT;
 
 const server =app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 const io = new Server(server);
 
 
-const connection = mongoose.connect('mongodb+srv://eugeniomatiasbrave:Eco336699@clustereugebrave.g7439kd.mongodb.net/EcommersToys?retryWrites=true&w=majority&appName=ClusterEugeBrave');
+mongoose.connect(config.mongo.URL);
 
 //Handlebars Configuración
 app.engine('handlebars', handlebars.engine());
@@ -44,15 +47,14 @@ app.use((req,res,next)=>{
 initializePassportConfig();
 app.use(passport.initialize());
 
-
-//Rutas Vistas
-app.use('/', ViewsRouter);
 //Rutas
+app.use('/', ViewsRouter);
+app.use('/api/users', usersRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/api/sessions', SessionsRouter);
 
-
+//Socket.io
 io.on('connection', async (socket) => {
     console.log('Cliente conectado con id:', socket.id);
    
