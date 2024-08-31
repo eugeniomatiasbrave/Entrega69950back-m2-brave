@@ -6,6 +6,14 @@ export default class UserDAO {
         return usersModel.find();
     }
 
+    getUserById(userId){
+        return usersModel.findOne(userId)
+    }
+   
+    getUserByEmail(email){
+        return usersModel.findOne({email});
+    }
+  
     create(user){
         return usersModel.create(user);
     }

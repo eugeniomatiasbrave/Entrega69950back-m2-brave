@@ -4,36 +4,35 @@ export default class CartRepository {
 	}
 
 	getCarts( opts={}) { 
-        return this.dao.get( opts ); 
+        return this.dao.get(opts); 
 	}
 
     getCartById (cid) {
-		return this.dao.getBy( cid ); 
+		return this.dao.getBy(cid); 
 	};
 
     createCart() {
-        const newCart = new cartModel({ products: [] });
-        return newCart.save();
+        return this.dao.create();  
     }
 
-    addProductToCart(cid, product) {
-        return this.dao.add(cid, product);
+    addProductToCart({ cid, product }) {
+        return this.dao.add({ cid, product });
     };
 
-    deleteProductCart(cid, pid) {
-        return this.dao.delete(cid, pid);
+    deleteProductCart({ cid, pid }) {
+        return this.dao.delete({ cid, pid });
     };
 
     deleteAllProductsCid(cid) {
         return this.dao.deleteAll(cid);
     };
 
-    updateCart(cid, products) {
-        return this.dao.update(cid, products);
+    updateCart({ cid, products }) {
+        return this.dao.update({ cid, products });
     };
 
-    updateProductQuantity(cid, pid, quantity) {
-        return this.dao.updateQuantity(cid, pid, quantity);
+    updateProductQuantity({ cid, pid, quantity }) {
+        return this.dao.updateQuantity({ cid, pid, quantity });
     };
 
 }

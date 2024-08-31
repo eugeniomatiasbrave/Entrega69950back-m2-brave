@@ -117,7 +117,7 @@ const updateProductQuantity = async (req, res) => {
   try {
       const { cid, pid } = req.params;
       const { quantity } = req.body;
-      const result = await cartsService.updateProductQuantity(cid, pid, quantity);
+      const result = await cartsService.updateProductQuantity({ cid, pid, quantity });
       if (result.nModified === 0) {
           return res.status(500).send({ status: "error", error: 'Error al actualizar la cantidad del producto en el carrito' });
       }

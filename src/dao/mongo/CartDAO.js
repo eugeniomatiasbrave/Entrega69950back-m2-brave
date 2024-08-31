@@ -16,7 +16,7 @@ export default class CartDAO {
     }
 
     // Método para agregar un producto al carrito seleccionado
-    add(cid, product) {
+    add({ cid, product }) {
         return cartModel.findOneAndUpdate(
             { _id: String(cid), "products.product": product.product },
             { $inc: { "products.$.quantity": product.quantity } },
@@ -25,7 +25,7 @@ export default class CartDAO {
     };
 
     //Metodo elimina un product del carrito
-    delete(cid, pid) {
+    delete({ cid, pid }) {
         return cartModel.updateOne(
             { _id: String(cid) },
             { $pull: { products: { _id: pid } } }
@@ -41,7 +41,7 @@ export default class CartDAO {
     };
 
 // Metodo para actualizar todos los productos
-    update(cid, products) {
+    update({ cid, products }) {
         return cartModel.updateOne(
             { _id: String(cid) },
             { $set: { products: products } }
@@ -49,7 +49,7 @@ export default class CartDAO {
     };
 
 // Metodo para actualizar la cantidad del producto
-    updateQuantity(cid, pid, quantity) {
+    updateQuantity({cid, pid, quantity}) {
         return cartModel.updateOne(
             { _id: String(cid), "products.product": pid },
             { $set: { "products.$.quantity": quantity } }

@@ -12,7 +12,6 @@ import ViewsRouter from './routes/ViewsRouter.js';
 import SessionsRouter from './routes/SessionsRouter.js';
 import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/carts.router.js';
-import usersRouter from './routes/users.router.js';
 
 import initializePassportConfig from './config/passport.config.js';
 import config from './config/config.js';
@@ -49,7 +48,6 @@ app.use(passport.initialize());
 
 //Rutas
 app.use('/', ViewsRouter);
-app.use('/api/users', usersRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/api/sessions', SessionsRouter);
