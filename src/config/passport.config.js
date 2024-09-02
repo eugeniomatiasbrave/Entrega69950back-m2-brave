@@ -7,6 +7,8 @@ import AuthService from "../services/AuthService.js";
 import config from '../config/config.js';
 
 const SECRET_KEY = config.jwt.SECRET_KEY;
+const ADMIN_USER = config.app.ADMIN_USER;
+const ADMIN_PWD = config.app.ADMIN_PWD;
 
 const initializePassportConfig = () => {
     passport.use('register', new LocalStrategy({
@@ -28,13 +30,20 @@ const initializePassportConfig = () => {
             }
             const authService = new AuthService();
             const hashedPassword = await authService.hashPassword(password);
+
+            let role = 'user';
+            if (email === ADMIN_USER && password === ADMIN_PWD) {
+                role = 'admin';
+            }
+
             const newUser = {
                 firstName,
                 lastName,
                 email,
                 birthDate: parsedDate,
                 password: hashedPassword,
-                cartId: null // Initialize cartId as null
+                role,
+                cartId: null, // Initialize cartId as null
             };
             const result = await usersService.createUser(newUser);
 
@@ -44,7 +53,7 @@ const initializePassportConfig = () => {
                 // Update the user's cart reference
                 await usersService.updateUserCart(result._id, newCart._id);
             }
-            // Find the user's cart and populate it with products
+            
             const cart = await cartsService.getCartById(result.cartId);
             result.cartId = cart._id;
             return done(null, result);
@@ -53,11 +62,15 @@ const initializePassportConfig = () => {
         }
     }));
 
-    passport.use('login', new LocalStrategy({
-        usernameField: 'email'
-    }, async (email, password, done) => {
+    passport.use('login', new LocalStrategy({ usernameField: 'email'}, async (email, password, done) => {
         try {
+
+            if( email === config.app.ADMIN_USER && password === config.app.ADMIN_PWD){
+                return done(null,{_id:0, firstName:"Administrador", role:"admin"})
+            }
+
             const user = await usersService.getUserByEmail(email);
+
             if (!user) {
                 return done(null, false, { message: "Incorrect credentials" });
             }
@@ -66,6 +79,7 @@ const initializePassportConfig = () => {
             if (!isValidPassword) {
                 return done(null, false, { message: "Incorrect credentials" });
             }
+
             return done(null, user);
         } catch (error) {
             return done(error);
@@ -78,7 +92,7 @@ const initializePassportConfig = () => {
     }, async (payload, done) => {
         try {
             console.log(payload);
-            return done(null, payload);
+            return done(null,payload);
         } catch (error) {
             return done(error);
         }

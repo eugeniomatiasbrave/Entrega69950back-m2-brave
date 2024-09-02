@@ -1,4 +1,4 @@
-import {productsService} from "../services/repositories.js";
+import {productsService, cartsService} from "../services/repositories.js";
 
 
 const renderHome = (req, res) => {
@@ -52,11 +52,17 @@ const renderRealTimeProducts = (req, res) => {
     res.render("RealTimeProducts");
 };
 
+const renderCarts = async (req, res) => {
+    const carts = await cartsService.getCarts();
+    res.render('Carts', { carts });
+};
+
 export default {
     renderHome,
     renderRegister,
     renderLogin,
     renderProfile,
     renderProducts,
-    renderRealTimeProducts
+    renderRealTimeProducts,
+    renderCarts
 };

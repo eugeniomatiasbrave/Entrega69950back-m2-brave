@@ -1,0 +1,27 @@
+<a href="http://localhost:8080/"><button>Home</button></a>
+<a href="http://localhost:8080/products"><button>Productos</button></a>
+<a href="http://localhost:8080/realTimeProducts"><button>Agregar Productos</button></a>
+<a href="http://localhost:8080/login"><button>Login</button></a>
+<a href="http://localhost:8080/register"><button>Register</button></a>
+<a href="http://localhost:8080/profile"><button>Profile</button></a>
+
+{{#if carts}}
+<h1 class="title">Lista de Carritos</h1>
+<div class="carts-container">
+  {{#each carts}}
+  <div class="cart">
+    <h2>Carrito ID: {{this._id}}</h2>
+    <ul>
+      {{#each this.products}}
+      <li>
+        <p>Producto ID: {{this.product._id}}</p>
+        <p>Cantidad: {{this.quantity}}</p>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+  {{/each}}
+</div>
+{{else}}
+<h1>No hay carritos en este momento</h1>
+{{/if}}

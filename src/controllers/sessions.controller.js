@@ -1,11 +1,35 @@
 import jwt from 'jsonwebtoken';
 import config from '../config/config.js';
 import PresentUserDTO from '../dto/user/PresentUserDTO.js';
+import { usersService} from "../services/repositories.js";
+import AuthService from "../services/AuthService.js";
+
 
 const SECRET_KEY = config.jwt.SECRET_KEY;
+const ADMIN_USER = config.app.ADMIN_USER;
+const ADMIN_PWD = config.app.ADMIN_PWD;
 
-const register = (req,res)=>{ 
-	res.sendSuccess("Registered")
+const register = async (req,res)=>{ 
+	const { email, password, firstName, lastName, birthDate } = req.body;
+
+    let role = 'user';
+    if (email === ADMIN_USER && password === ADMIN_PWD) {
+        role = 'admin';
+    }
+
+	const authService = new AuthService();
+    const hashedPassword = await authService.hashPassword(password);
+    const newUser = {
+        firstName,
+        lastName,
+        email,
+        birthDate,
+        password: hashedPassword,
+        role
+    };
+
+    await usersService.createUser(newUser);
+    res.sendSuccess("Registered");
 }
 
 const login = (req,res)=>{ 
