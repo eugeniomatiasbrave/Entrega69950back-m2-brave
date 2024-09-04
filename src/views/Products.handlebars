@@ -1,10 +1,11 @@
 
 <a href="http://localhost:8080/"><button>Home</button></a>
 <a href="http://localhost:8080/products"><button>Productos</button></a>
-<a href="http://localhost:8080/realTimeProducts"><button>Agregar Productos</button></a>
+<a href="http://localhost:8080/realTimeProducts"><button>Crear Productos</button></a>
 <a href="http://localhost:8080/login"><button>Login</button></a>
 <a href="http://localhost:8080/register"><button>Register</button></a>
 <a href="http://localhost:8080/profile"><button>Profile</button></a>
+<a href="http://localhost:8080/carts"><button>Carrito</button></a>
 
 <!--vista de productos-->
 {{#if products}}
@@ -23,6 +24,11 @@
     {{#each this.thumbnails}}
         <img src={{this.path}} style="width:200px; height:200px; object-fit:cover;">
     {{/each}}
+    </div>
+    <div >
+    <a href="http://localhost:8080/products/{{this._id}}">
+     <button type="submit" class="btn btn-primary">Ver Detalle</button>
+    </a>
     </div>
   </div>
   {{/each}}
@@ -46,5 +52,7 @@
 {{else}}
 <h1>No hay lista de productos en este momento</h1>
 {{/if}}
+
+
 
 

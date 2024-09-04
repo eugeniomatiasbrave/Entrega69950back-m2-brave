@@ -1,6 +1,5 @@
 import {productsService, cartsService} from "../services/repositories.js";
 
-
 const renderHome = (req, res) => {
     res.render('Home');
 };
@@ -52,6 +51,17 @@ const renderRealTimeProducts = (req, res) => {
     res.render("RealTimeProducts");
 };
 
+const renderProductDetail = async (req, res) => {
+    const productId = req.params.pid;
+    const product = await productsService.getProductById(productId);
+
+    if (!product) {
+        return res.render('404');
+    }
+
+    res.render('ProductDetail', { product });
+};
+
 const renderCarts = async (req, res) => {
     const carts = await cartsService.getCarts();
     res.render('Carts', { carts });
@@ -64,5 +74,6 @@ export default {
     renderProfile,
     renderProducts,
     renderRealTimeProducts,
+    renderProductDetail,
     renderCarts
 };

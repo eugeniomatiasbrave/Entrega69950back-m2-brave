@@ -10,5 +10,6 @@ router.get('/:pid', executePolicies(['PUBLIC']), productsController.getProductBy
 router.post('/', executePolicies(['ADMIN']), uploader.array('thumbnail', 3),productsController.createProduct); // ver si funciona
 router.delete('/:pid', executePolicies(['ADMIN']), productsController.deleteProduct);
 router.put('/:pid', executePolicies(['ADMIN']), productsController.updateProduct);
+router.get('/detail/:pid', executePolicies(['PUBLIC']), viewsController.renderProductDetail);
 
 export default router;

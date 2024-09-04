@@ -1,3 +1,5 @@
+
+
 export default class CartRepository {
 	constructor(dao) {
 		this.dao = dao;
@@ -12,12 +14,12 @@ export default class CartRepository {
 	};
 
     createCart() {
-        return this.dao.create();  
+        return this.dao.create( {products:[]} );  
     }
 
-    addProductToCart({ cid, product }) {
-        return this.dao.add({ cid, product });
-    };
+    addProductToCart({ cid, pid, quantity }) {
+        return this.dao.addProductToCart({ cid, pid, quantity });
+    }
 
     deleteProductCart({ cid, pid }) {
         return this.dao.delete({ cid, pid });
@@ -34,5 +36,6 @@ export default class CartRepository {
     updateProductQuantity({ cid, pid, quantity }) {
         return this.dao.updateQuantity({ cid, pid, quantity });
     };
+
 
 }

@@ -1,0 +1,24 @@
+<a href="http://localhost:8080/"><button>Home</button></a>
+<a href="http://localhost:8080/products"><button>Productos</button></a>
+<a href="http://localhost:8080/realTimeProducts"><button>Crear Productos</button></a>
+<a href="http://localhost:8080/login"><button>Login</button></a>
+<a href="http://localhost:8080/register"><button>Register</button></a>
+<a href="http://localhost:8080/profile"><button>Profile</button></a>
+<a href="http://localhost:8080/carts"><button>Carrito</button></a>
+
+<h1 class="title">{{product.title}}</h1>
+<p>{{product.description}}</p>
+<p>Código: {{product.code}}</p>
+<p>Precio: ${{product.price}}</p>
+<p>Status: {{product.status}}</p>
+<p>Stock: {{product.stock}}</p>
+<p>Categoría: {{product.category}}</p>
+<div>
+  {{#each product.thumbnails}}
+    <img src={{this.path}} style="width:200px; height:200px; object-fit:cover;">
+  {{/each}}
+</div>
+<div>
+  <button type="button" class="btn btn-primary add-to-cart" data-product-id="{{product._id}}">Agregar al Carrito</button>
+</div>
+<script src="/js/carts.js"></script>

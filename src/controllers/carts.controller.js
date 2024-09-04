@@ -1,4 +1,4 @@
-import {cartsService, productsService} from "../services/repositories.js";
+import { cartsService, productsService, ticketsService , usersService} from "../services/repositories.js";
 
 const getCarts = async (req,res) => {
   try {
@@ -38,47 +38,21 @@ const createCart = async (req,res) => {
   }
 };
 
-const addProductToCart = async (req,res) => {
+const addProductToCart = async (req, res) => {
+  const { cid, pid } = req.params;
+  const { quantity = 1 } = req.body;
+
   try {
-      let cartId;
-      const cid = req.params.cid;
-      const pid = req.params.pid;
-      const quantity = req.body.quantity || 1;
-      const carts = await cartsService.getCarts();
-      if (!cid || carts.length === 0) {
-          const newCart = await cartsService.createCart();
-          cartId = newCart._id;
-      } else {
-          const cart = await cartsService.getCartById(cid);
-          if (!cart) {
-              return res.status(404).send({ status: "error", error: 'Carrito no encontrado' });
-          }
-          cartId = cid;
-      }
       const product = await productsService.getProductById(pid);
       if (!product) {
-          return res.status(404).send({ status: "error", error: 'Producto no encontrado con id: ' + pid });
+          return res.status(404).send({ status: "error", error: 'Producto no encontrado' });
       }
-      const productToAdd = { product: pid, quantity };
-      const updateResult = await cartsService.addProductToCart(cartId, productToAdd);
-      if (updateResult.nModified === 0) {
-          return res.status(500).send({ status: "error", error: 'Error al agregar el producto al carrito' });
-      }
-      res.send({ status: "success", message: 'Producto agregado al carrito', data: productToAdd });
+
+      const result = await cartsService.addProductToCart({ cid, pid, quantity });
+      res.status(200).send({ status: "success", message: 'Producto agregado al carrito', data: result });
   } catch (error) {
       console.error('Error al agregar el producto al carrito:', error);
       res.status(500).send({ status: "error", error: 'Error al agregar el producto al carrito' });
-  }
-};
-
-const deleteAllProductsCid = async (req,res) => {
-  try {
-    const cid = req.params.cid;
-    const result = await cartsService.deleteAllProductsCid(cid);
-    res.send({ message: 'Todos los productos borrados del carrito', data: result });
-  } catch (error) {
-    console.error('Error al borrar productos del carrito:', error);
-    res.status(500).send({ message: 'Error al borrar productos del carrito' });
   }
 };
 
@@ -91,6 +65,20 @@ const deleteProductCart = async (req,res) => {
   } catch (error) {
     console.error('Error al eliminar el producto del carrito:', error);
     res.status(500).send({ message: 'Error al eliminar el producto del carrito' });
+  }
+};
+
+const deleteAllProductsCid = async (req, res) => {
+  try {
+    const { cid } = req.params;
+    const result = await cartsService.deleteAllProductsCid(cid);
+    if (result.nModified === 0) {
+      return res.status(500).send({ status: "error", error: 'Error al eliminar todos los productos del carrito' });
+    }
+    res.send({ status: "success", message: 'Todos los productos eliminados del carrito' });
+  } catch (error) {
+    console.error('Error al eliminar todos los productos del carrito:', error);
+    res.status(500).send({ status: "error", error: 'Error al eliminar todos los productos del carrito' });
   }
 };
 
@@ -128,6 +116,63 @@ const updateProductQuantity = async (req, res) => {
   }
 };
 
+const purchaseCart = async (req, res) => {
+    const { cid } = req.params;
+    const user = usersService.getUserById(req.user._id);
+
+    if (!user) {
+      return res.status(404).send({ status: "error", error: 'Usuario no encontrado' });
+    }
+    const purchaserEmail = user.email;
+    ///const purchaserEmail = req.user.email; // Obtener el correo del usuario autenticado por req.user
+    console.log('Email de ticket', purchaserEmail);
+  
+    const cart = await cartsService.getCartById(cid);
+  
+    if (!cart) {
+      return res.status(500).send({ status: "error", error: 'No se encontró el carrito' });
+    }
+  
+    const productsInCart = cart.products;
+    const productsToPurchase = []; // Productos que se pueden comprar
+    const insufficientStockProducts = []; // Productos con stock insuficiente
+  
+    for (const item of productsInCart) {
+      const product = await productsService.getProductById(item.product._id);
+  
+      // Verificar si hay suficiente stock para la cantidad solicitada
+      if (product.stock >= item.quantity) {
+        product.stock -= item.quantity;
+        await productsService.updateProduct(product._id, { stock: product.stock });
+        productsToPurchase.push(item);
+      } else {
+        insufficientStockProducts.push(item);
+      }
+    }
+  
+    if (productsToPurchase.length === 0) {
+      return res.status(400).send({ status: "error", error: 'No hay productos con stock suficiente para la compra de '+ insufficientStockProducts.length + ' productos' });
+    }
+           
+    // Crear un ticket para la compra
+    const ticket = {
+      products: productsToPurchase,
+      total: productsToPurchase.reduce((total, item) => total + item.product.price * item.quantity, 0),
+      purchaser: purchaserEmail
+    };
+
+    const response = await ticketsService.createTicket({ticket});
+ 
+    res.send({
+      status: "success",
+      message: 'Compra realizada con éxito',
+      response,
+      purchasedProducts: productsToPurchase,
+      insufficientStockProducts
+    });
+}
+  
+
 export default { 
 	getCarts,
 	getCartById,
@@ -136,5 +181,35 @@ export default {
 	deleteAllProductsCid,
 	deleteProductCart,
 	updateCart,
-	updateProductQuantity
+	updateProductQuantity,
+  purchaseCart
 };
+
+
+/* 
+consigna ticket: 
+
+Crear un modelo Ticket el cual contará con todas las formalizaciones de la compra. Éste contará con los campos
+Id (autogenerado por mongo)
+code: String debe autogenerarse y ser único
+purchase_datetime: Deberá guardar la fecha y hora exacta en la cual se formalizó la compra (básicamente es un created_at)
+amount: Number, total de la compra.
+purchaser: String, contendrá el correo del usuario asociado al carrito.
+
+Implementar, en el router de carts, la ruta /:cid/purchase, la cual permitirá finalizar el proceso de compra de 
+dicho carrito.
+La compra debe corroborar el stock del producto al momento de finalizarse
+Si el producto tiene suficiente stock para la cantidad indicada en el producto del carrito, 
+entonces restarlo del stock del producto y continuar.
+Si el producto no tiene suficiente stock para la cantidad indicada en el producto del carrito, 
+entonces no agregar el producto al proceso de compra. 
+
+Al final, utilizar el servicio de Tickets para poder generar un ticket con los datos de la compra.
+En caso de existir una compra no completada, devolver el arreglo con los ids de los productos que 
+no pudieron procesarse.
+Una vez finalizada la compra, el carrito asociado al usuario que compró deberá contener sólo los 
+productos que no pudieron comprarse. Es decir, se filtran los que sí se compraron y se quedan aquellos 
+que no tenían disponibilidad.
+
+
+*/

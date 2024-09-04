@@ -3,26 +3,20 @@ import handlebars from 'express-handlebars';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
-
 import { Server } from "socket.io";
 import __dirname from './utils.js';
 import {productsService} from "./services/repositories.js";
-
 import ViewsRouter from './routes/ViewsRouter.js';
 import SessionsRouter from './routes/SessionsRouter.js';
 import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/carts.router.js';
-
 import initializePassportConfig from './config/passport.config.js';
 import config from './config/config.js';
 
 const app = express();
-
 const PORT = config.app.PORT;
-
 const server =app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 const io = new Server(server);
-
 
 mongoose.connect(config.mongo.URL);
 
@@ -36,9 +30,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-
 app.use((req,res,next)=>{
     req.io = io;
+    res.sendUnauthorized = () => res.status(401).send({ status: "error", error: "Unauthorized" });
     next();
 })
 
@@ -55,10 +49,8 @@ app.use('/api/sessions', SessionsRouter);
 //Socket.io
 io.on('connection', async (socket) => {
     console.log('Cliente conectado con id:', socket.id);
-   
     const productsIo = await productsService.getProductsViews();
        io.emit('ProductsIo', productsIo);
-
     socket.on('createProduct', async (data) => {
         try {
           const productsIo = await productsService.createProduct(data);
@@ -88,6 +80,3 @@ io.on('connection', async (socket) => {
         }
     });
 });
-
-
-

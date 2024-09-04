@@ -1,5 +1,4 @@
 import { Router } from "express";
-
 import { passportCall } from "../middlewares/passportCall.js";
 import { executePolicies } from "../middlewares/policies.js";
 

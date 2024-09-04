@@ -23,9 +23,9 @@ export default class ProductDAO {
         return productModel.find({}).lean();
     };
     
-    getBy (pid) { // Busca solo uno
-        return productModel.findOne( {_id: pid}); 
-    };
+    getBy(id) {
+        return this.model.findById(id); 
+    }
     
     create (product){ // Crea uno nuevo
         return productModel.create(product);

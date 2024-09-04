@@ -11,18 +11,27 @@ export default class CartDAO {
 	};
 
     create() {
-        const newCart = new cartModel({ products: [] });
-        return newCart.save();
+        return cartModel.create({ products: [] });
     }
 
     // Método para agregar un producto al carrito seleccionado
-    add({ cid, product }) {
-        return cartModel.findOneAndUpdate(
-            { _id: String(cid), "products.product": product.product },
-            { $inc: { "products.$.quantity": product.quantity } },
-            { new: true }
-        );
-    };
+    async addProductToCart({ cid, pid, quantity = 1 }) {
+        const cart = await cartModel.findOne({ _id: cid }).populate('products.product');
+        if (!cart) {
+            throw new Error('Carrito no encontrado');
+        }
+
+        const productIndex = cart.products.findIndex(p => p.product._id.toString() === pid);
+        if (productIndex !== -1) {
+            cart.products[productIndex].quantity += quantity;
+        } else {
+            cart.products.push({ product: pid, quantity });
+        }
+
+        await cart.save();
+        return cartModel.findOne({ _id: cid }).populate('products.product').lean(); // Retorna el carrito actualizado y populado
+    }
+
 
     //Metodo elimina un product del carrito
     delete({ cid, pid }) {

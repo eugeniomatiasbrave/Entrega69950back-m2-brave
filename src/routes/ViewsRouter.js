@@ -12,8 +12,8 @@ class ViewsRouter extends BaseRouter {
         this.get('/products', ['PUBLIC'], viewsController.renderProducts);
         this.get("/realtimeproducts", ['ADMIN'], executePolicies(['ADMIN']), viewsController.renderRealTimeProducts);
         this.get('/carts', ['USER'], executePolicies(['USER']), viewsController.renderCarts);
+        this.get('/detail/:pid', ['PUBLIC'], viewsController.renderProductDetail);
     }
 }
-
 const viewsRouter = new ViewsRouter();
 export default viewsRouter.getRouter();
