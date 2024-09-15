@@ -37,6 +37,7 @@ const login = (req,res)=>{
 	const sessionUser = new PresentUserDTO(req.user);
 	const token = jwt.sign(sessionUser.toObject(), SECRET_KEY ,{expiresIn:'15d'}); // convierto a sessionUser en un objeto plano
 	res.cookie('tokencito',token).send({status:"success",message:"logged in"});
+    console.log(token);
 }
 
 const current = (req,res)=>{

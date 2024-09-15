@@ -1,5 +1,6 @@
 import { Router } from "express";
 import productsController from "../controllers/products.controller.js";
+import viewsController from "../controllers/views.controller.js";
 import { executePolicies } from '../middlewares/policies.js';
 import uploader from '../services/uploader.js';
 

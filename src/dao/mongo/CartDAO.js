@@ -6,8 +6,8 @@ export default class CartDAO {
         return cartModel.find( opts ).lean(); // Busca todos
 	}
 
-    getBy (cid) {
-		return cartModel.findOne( {_id: cid}).lean(); // Busca solo uno
+    getBy (params) {
+		return cartModel.findOne(params).lean(); // Busca solo uno
 	};
 
     create() {
@@ -20,13 +20,16 @@ export default class CartDAO {
         if (!cart) {
             throw new Error('Carrito no encontrado');
         }
+        if (!pid) {
+            throw new Error('El ID del producto no puede ser nulo');
+        }
 
         const productIndex = cart.products.findIndex(p => p.product._id.toString() === pid);
         if (productIndex !== -1) {
             cart.products[productIndex].quantity += quantity;
         } else {
-            cart.products.push({ product: pid, quantity });
-        }
+            cart.products.push({ product: pid, quantity })
+        };
 
         await cart.save();
         return cartModel.findOne({ _id: cid }).populate('products.product').lean(); // Retorna el carrito actualizado y populado
@@ -39,7 +42,7 @@ export default class CartDAO {
             { _id: String(cid) },
             { $pull: { products: { _id: pid } } }
         );
-    };
+    }
 
     // Método deleteCard, no limina el carrito
     deleteAll(cid) {
@@ -47,7 +50,7 @@ export default class CartDAO {
             { _id: String(cid) },
             { $set: { products: [] } }
         );
-    };
+    }
 
 // Metodo para actualizar todos los productos
     update({ cid, products }) {
@@ -55,7 +58,7 @@ export default class CartDAO {
             { _id: String(cid) },
             { $set: { products: products } }
         );
-    };
+    }
 
 // Metodo para actualizar la cantidad del producto
     updateQuantity({cid, pid, quantity}) {
@@ -63,8 +66,8 @@ export default class CartDAO {
             { _id: String(cid), "products.product": pid },
             { $set: { "products.$.quantity": quantity } }
         );
-    };
-};
+    }
+}
 
 
   

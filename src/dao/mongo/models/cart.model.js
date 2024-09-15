@@ -8,8 +8,8 @@ const schema = new mongoose.Schema({
             product: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Products', // Referencia al modelo de productos
-                required: true,
-                unique: true,
+                required: true
+              
             },
             quantity: {
                 type: Number,

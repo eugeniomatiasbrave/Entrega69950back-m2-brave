@@ -2,7 +2,7 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { ExtractJwt, Strategy as JWTStrategy } from "passport-jwt";
 
-import { usersService } from "../services/repositories.js";
+import { usersService, cartsService } from "../services/repositories.js";
 import AuthService from "../services/AuthService.js";
 import config from '../config/config.js';
 

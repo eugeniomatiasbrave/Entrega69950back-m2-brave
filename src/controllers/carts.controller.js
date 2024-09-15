@@ -1,6 +1,6 @@
 import { cartsService, productsService, ticketsService , usersService} from "../services/repositories.js";
 
-const getCarts = async (req,res) => {
+const getCarts = async (req,res) => {  // probada ok
   try {
     const carts = await cartsService.getCarts();
     if (!carts) {
@@ -15,17 +15,20 @@ const getCarts = async (req,res) => {
 
 const getCartById = async (req,res) => {
   const cid = req.params.cid;
-  try {
+    if (!cid) {
+       return res.status(400).send({ status: "error", error: 'cid es requerido' });
+    }
+
+    try {
       const cart = await cartsService.getCartById(cid);
       if (!cart) {
-          return res.status(404).send({ status: "error", error: 'cid no encontrado'});
+        return res.status(404).send({ status: "error", error: 'cid no encontrado' });
       }
-      const productsInCart = cart.products;
-      res.send({ status: "success", data: productsInCart });
-  } catch (error) {
+      res.status(200).send({ status: "success", data: cart });
+    } catch (error) {
       console.error('Error al obtener el carrito:', error);
-      res.status(500).send({status: "error", error: 'Error al obtener el carrito'});
-  }
+      res.status(500).send({ status: "error", error: 'Error al obtener el carrito' });
+    }
 };
 
 const createCart = async (req,res) => {
