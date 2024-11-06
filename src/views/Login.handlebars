@@ -1,21 +1,23 @@
-<a href="http://localhost:8080/"><button>Home</button></a>
-<a href="http://localhost:8080/products"><button>Productos</button></a>
-<a href="http://localhost:8080/realTimeProducts"><button>Crear Productos</button></a>
-<a href="http://localhost:8080/login"><button>Login</button></a>
-<a href="http://localhost:8080/register"><button>Register</button></a>
-<a href="http://localhost:8080/profile"><button>Profile</button></a>
-<a href="http://localhost:8080/carts"><button>Carrito</button></a>
 
-<h1>Ingresa</h1>
-
-<form id="loginForm">
-    <label>Email</label>
-    <input name="email">
-    <br/>
-    <label>Contraseña</label>
-    <input name="password">
-    <br/>
-    <input type="submit">
-</form>
+<div class="w-1/3 mx-auto mt-10">
+    <h1 class="title text-3xl font-bold mb-4">Ingresa</h1>
+    <form id="loginForm" class="space-y-4">
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">Email</span>
+            </label>
+            <input name="email" class="input input-bordered">
+        </div>
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">Contraseña</span>
+            </label>
+            <input name="password" class="input input-bordered">
+        </div>
+        <div class="form-control mt-6">
+            <input type="submit" class="btn btn-primary">
+        </div>
+    </form>
+</div>
 
 <script src="/js/login.js"></script>

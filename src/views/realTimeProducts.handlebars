@@ -1,62 +1,64 @@
-
-<a href="http://localhost:8080/"><button>Home</button></a>
-<a href="http://localhost:8080/products"><button>Productos</button></a>
-<a href="http://localhost:8080/realTimeProducts"><button>Crear Productos</button></a>
-<a href="http://localhost:8080/login"><button>Login</button></a>
-<a href="http://localhost:8080/register"><button>Register</button></a>
-<a href="http://localhost:8080/profile"><button>Profile</button></a>
-<a href="http://localhost:8080/carts"><button>Carrito</button></a>
-
- <h1 class="title">Crear Producto</h1>
- <form  id="formProduct" class="product-form" enctype="multipart/form-data"> 
+<div class="w-1/3 mx-auto mt-10">
+<h1 class="title text-3xl font-bold mb-4">Crear Producto</h1>
+<form id="formProduct" class="space-y-4 product-form" enctype="multipart/form-data">
   <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="title">Título</label>
-      <input type="text" name="title" required class="form-control">
+    <div class="form-control">
+      <label class="label">
+        <span class="label-text">Título</span>
+      </label>
+      <input type="text" name="title" required class="input input-bordered">
     </div>
-    <div class="form-group col-md-6">
-      <label for="description">Descripción</label>
-      <input type="text" name="description" required class="form-control">
+    <div class="form-control">
+      <label class="label">
+        <span class="label-text">Descripción</span>
+      </label>
+      <input type="text" name="description" required class="input input-bordered">
     </div>
   </div>
   <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="code">Código</label>
-      <input type="text" name="code" required class="form-control">
+    <div class="form-control">
+      <label class="label">
+        <span class="label-text">Código</span>
+      </label>
+      <input type="text" name="code" required class="input input-bordered">
     </div>
-    <div class="form-group col-md-6">
-      <label for="price">Precio</label>
-      <input type="number" name="price" required class="form-control">
+    <div class="form-control">
+      <label class="label">
+        <span class="label-text">Precio</span>
+      </label>
+      <input type="number" name="price" required class="input input-bordered">
     </div>
   </div>
   <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="stock">Stock</label>
-      <input type="number" name="stock" required class="form-control">
+    <div class="form-control">
+      <label class="label">
+        <span class="label-text">Stock</span>
+      </label>
+      <input type="number" name="stock" required class="input input-bordered">
     </div>
-    <div class="form-group col-md-6">
-      <label for="category">Categoría</label>
-      <input type="text" name="category" required class="form-control">
+    <div class="form-control">
+      <label class="label">
+        <span class="label-text">Categoría</span>
+      </label>
+      <input type="text" name="category" required class="input input-bordered">
     </div>
-    <div class="form-group col-md-6">
-     <label for="category">Thumbnail</label>
-     <input type="file" name="thumbnail" multiple placeholder="Thumbnails">
+    <div class="form-control">
+      <label class="label">
+        <span class="label-text">Thumbnail</span>
+      </label>
+      <input type="file" name="thumbnail" multiple placeholder="Thumbnails" class="input input-bordered">
     </div>
   </div>
-  <div class="form-group">
-    <button type="submit" class="btn btn-primary">Crear Producto</button> 
+  <div class="form-control mt-6">
+    <button type="submit" class="btn btn-primary">Crear Producto</button>
   </div>
 </form>
+</div>
 
-
-<h1 class="title">Lista de Productos</h1>
-<div id="productsContainer" class="cards-container">
+<h1 class="title text-3xl font-bold mb-4">Lista de Productos</h1>
+<div id="productsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 w-auto">
    <!--vista tabla de productos-->
 </div>
 
-
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/realTimeProducts.js"></script>
-
-
-

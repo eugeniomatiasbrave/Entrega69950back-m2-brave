@@ -67,6 +67,11 @@ const renderCarts = async (req, res) => {
     res.render('Carts', { carts });
 };
 
+const error = (req, res) => {
+    res.render('404');
+}
+
+
 export default {
     renderHome,
     renderRegister,
@@ -75,5 +80,6 @@ export default {
     renderProducts,
     renderRealTimeProducts,
     renderProductDetail,
-    renderCarts
+    renderCarts,
+    error
 };

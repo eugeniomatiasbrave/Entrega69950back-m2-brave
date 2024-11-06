@@ -6,7 +6,7 @@ import uploader from '../services/uploader.js';
 
 const router = Router();
 
-router.get('/', executePolicies(['PUBLIC']), productsController.getProducts);
+router.get('/', productsController.getProducts);
 router.get('/:pid', executePolicies(['PUBLIC']), productsController.getProductById);
 router.post('/', executePolicies(['ADMIN']), uploader.array('thumbnail', 3),productsController.createProduct); // ver si funciona
 router.delete('/:pid', executePolicies(['ADMIN']), productsController.deleteProduct);

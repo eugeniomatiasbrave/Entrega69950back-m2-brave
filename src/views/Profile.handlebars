@@ -1,13 +1,8 @@
-<a href="http://localhost:8080/"><button>Home</button></a>
-<a href="http://localhost:8080/products"><button>Productos</button></a>
-<a href="http://localhost:8080/realTimeProducts"><button>Crear Productos</button></a>
-<a href="http://localhost:8080/login"><button>Login</button></a>
-<a href="http://localhost:8080/register"><button>Register</button></a>
-<a href="http://localhost:8080/profile"><button>Profile</button></a>
-<a href="http://localhost:8080/carts"><button>Carrito</button></a>
 
-<h1 class="title">Perfil</h1>
-<p>{{user.name}}</p>
-<p>Rol: {{user.role}}</p>
+<h1 class="text-3xl font-bold mb-4">Perfil</h1>
+<p class="text-lg mb-2">{{user.name}}</p>
+<p class="text-lg mb-4">Rol: {{user.role}}</p>
 
-<a href="/api/sessions/logout"><button id="logoutButton">Logout</button></a>
+<a href="/api/sessions/logout">
+  <button id="logoutButton" class="btn btn-primary">Logout</button>
+</a>

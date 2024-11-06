@@ -1,58 +1,46 @@
-
-<a href="http://localhost:8080/"><button>Home</button></a>
-<a href="http://localhost:8080/products"><button>Productos</button></a>
-<a href="http://localhost:8080/realTimeProducts"><button>Crear Productos</button></a>
-<a href="http://localhost:8080/login"><button>Login</button></a>
-<a href="http://localhost:8080/register"><button>Register</button></a>
-<a href="http://localhost:8080/profile"><button>Profile</button></a>
-<a href="http://localhost:8080/carts"><button>Carrito</button></a>
-
 <!--vista de productos-->
 {{#if products}}
-<h1 class="title">Lista de Productos</h1>
-<div class="cards-container">
+<h1 class="text-3xl font-bold text-center my-6">Lista de Productos</h1>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 w-2/3">
   {{#each products}}
-  <div class="card">
-    <h2>{{this.title}}</h2>
-    <p>{{this.description}}</p>
-    <p>Código: {{this.code}}</p>
-    <p>Precio: ${{this.price}}</p>
-    <p>Status: {{this.status}}</p>
-    <p>Stock: {{this.stock}}</p>
-    <p>Categoría: {{this.category}}</p>
-    <div>
-    {{#each this.thumbnails}}
-        <img src={{this.path}} style="width:200px; height:200px; object-fit:cover;">
-    {{/each}}
-    </div>
-    <div >
-    <a href="http://localhost:8080/products/{{this._id}}">
-     <button type="submit" class="btn btn-primary">Ver Detalle</button>
-    </a>
+  <div class="card shadow-lg compact bg-base-100 w-2/3 border border-white">
+    <div class="card-body">
+      <h2 class="card-title">{{this.title}}</h2>
+      <p>{{this.description}}</p>
+      <p>Código: {{this.code}}</p>
+      <p>Precio: ${{this.price}}</p>
+      <p>Status: {{this.status}}</p>
+      <p>Stock: {{this.stock}}</p>
+      <p>Categoría: {{this.category}}</p>
+      <div class="flex flex-wrap gap-2">
+        {{#each this.thumbnails}}
+          <img src={{this.path}} class="w-32 h-32 object-cover rounded-lg">
+        {{/each}}
+      </div>
+      <div class="card-actions justify-end mt-4">
+        <a href="http://localhost:8080/products/{{this._id}}">
+          <button class="btn btn-primary">Ver Detalle</button>
+        </a>
+      </div>
     </div>
   </div>
   {{/each}}
 </div>
 
 <!--paginado-->
-
- <!--paginado-->
-
-<div class="pagination">
+<div class="flex justify-center mt-6">
   {{#if hasPrevPage}}
-    <a href="http://localhost:8080/products?page={{prevPage}}"><button class="btn-pagination">Anterior</button></a>
+    <a href="http://localhost:8080/products?page={{prevPage}}">
+      <button class="btn btn-outline">Anterior</button>
+    </a>
   {{/if}}
-
-  <h4 class="page-number">{{page}}</h4>
-
+  <h4 class="mx-4">{{page}}</h4>
   {{#if hasNextPage}}
-    <a href="http://localhost:8080/products?page={{nextPage}}"><button class="btn-pagination">Siguiente</button></a>
+    <a href="http://localhost:8080/products?page={{nextPage}}">
+      <button class="btn btn-outline">Siguiente</button>
+    </a>
   {{/if}}
 </div>
 {{else}}
-<h1>No hay lista de productos en este momento</h1>
+<h1 class="text-3xl font-bold text-center my-6">No hay lista de productos en este momento</h1>
 {{/if}}
-
-
-
-

@@ -4,8 +4,8 @@ export default class ProductRepository {
 		this.dao = dao;	
     };
 
-	getProducts(params) {
-         return this.dao.get(params);  
+	getProducts(page, limit, sort, maxPrice, category, stock) {
+         return this.dao.get(page, limit, sort, maxPrice, category, stock);  
     };
     
     getProductsViews() {
