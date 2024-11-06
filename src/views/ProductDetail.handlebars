@@ -1,17 +1,32 @@
+<h1>Detalle del Producto</h1>
 
-<h1 class="title">{{product.title}}</h1>
-<p>{{product.description}}</p>
-<p>Código: {{product.code}}</p>
-<p>Precio: ${{product.price}}</p>
-<p>Status: {{product.status}}</p>
-<p>Stock: {{product.stock}}</p>
-<p>Categoría: {{product.category}}</p>
-<div>
-  {{#each product.thumbnails}}
-    <img src={{this.path}} style="width:200px; height:200px; object-fit:cover;">
+<div class="card shadow-lg compact bg-base-100 w-1/4 border border-white">
+  {{#each product}}
+    <div class="flex flex-wrap gap-2">
+      {{#each this.thumbnails}}
+        <img src={{this.path}} class="w-52 h-52 object-cover rounded-lg">
+      {{/each}}
+    </div>
+    <p>{{this._id}}</p>
+    <p>{{this.title}}</p>
+    <p>{{this.description}}</p>
+    <p>{{this.code}}</p>
+    <p>{{this.price}}</p>
+    <p>{{this.status}}</p>
+    <p>{{this.stock}}</p>
+    <p>{{this.category}}</p>
   {{/each}}
+
+
+  <form action="/api/carts/{{cartId}}/product/{{product._id}}" method="POST">
+    <div class="compact bg-base-200 py-2">
+      <label class="label">
+        <span class="label-text">Indicar Cantidad</span>
+      </label>
+      <input type="number" name="quantity" class="input input-bordered" placeholder="Cantidad">
+    </div>
+    <div class="card-actions">
+      <button type="submit" class="btn btn-primary">Agregar al Cart</button>
+    </div>
+  </form>
 </div>
-<div>
-  <button type="button" class="btn btn-primary add-to-cart" data-product-id="{{product._id}}">Agregar al Carrito</button>
-</div>
-<script src="/js/carts.js"></script>

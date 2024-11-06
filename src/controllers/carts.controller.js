@@ -43,7 +43,11 @@ const createCart = async (req,res) => {
 
 const addProductToCart = async (req, res) => {
   const { cid, pid } = req.params;
-  const { quantity = 1 } = req.body;
+  const { quantity  } = req.body;
+
+  if ( quantity === "" || quantity === undefined || quantity === null) {
+    quantity = 1;
+  }
 
   try {
       const product = await productsService.getProductById(pid);
@@ -51,7 +55,7 @@ const addProductToCart = async (req, res) => {
           return res.status(404).send({ status: "error", error: 'Producto no encontrado' });
       }
 
-      const result = await cartsService.addProductToCart({ cid, pid, quantity });
+      const result = await cartsService.addProductToCart( {cid, pid, quantity} );
       res.status(200).send({ status: "success", message: 'Producto agregado al carrito', data: result });
   } catch (error) {
       console.error('Error al agregar el producto al carrito:', error);

@@ -14,10 +14,6 @@ const renderLogin = (req, res) => {
 
 const renderProfile = (req, res) => {
     console.log(req.user);
-
-    if (!req.user) {
-        return res.redirect('/login');
-    }
     res.render('Profile', {
         user: req.user
     });
@@ -52,19 +48,26 @@ const renderRealTimeProducts = (req, res) => {
 };
 
 const renderProductDetail = async (req, res) => {
-    const productId = req.params.pid;
-    const product = await productsService.getProductById(productId);
+  try {
+    const product = await productsService.getProductById(req.params.pid);
+    const cart = await cartsService.getCartById(req.params.cid);
+    const cartId = cart._id;
+    console.log('cart',cart._id)
 
     if (!product) {
-        return res.render('404');
+      return res.status(404).send({ status: "error", error: 'Producto no encontrado' });
     }
 
-    res.render('ProductDetail', { product });
+    res.render('ProductDetail', { product, cartId });
+  } catch (error) {
+    console.error('Error al obtener el detalle del producto:', error);
+    res.status(500).send({ status: "error", error: 'Error al obtener el detalle del producto' });
+  }
 };
 
-const renderCarts = async (req, res) => {
-    const carts = await cartsService.getCarts();
-    res.render('Carts', { carts });
+const renderCartById = async (req, res) => { // muestro el carrito del usuario
+    const cart = await cartsService.getCartById(req.params.cid);
+    res.render('Cart', { cart });
 };
 
 const error = (req, res) => {
@@ -80,6 +83,6 @@ export default {
     renderProducts,
     renderRealTimeProducts,
     renderProductDetail,
-    renderCarts,
+    renderCartById,
     error
 };

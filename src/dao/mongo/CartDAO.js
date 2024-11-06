@@ -1,4 +1,5 @@
 import cartModel from './models/cart.model.js';
+import productModel from './models/product.model.js';
 
 export default class CartDAO {
 	
@@ -15,24 +16,23 @@ export default class CartDAO {
     }
 
     // Método para agregar un producto al carrito seleccionado
-    async addProductToCart({ cid, pid, quantity = 1 }) {
-        const cart = await cartModel.findOne({ _id: cid }).populate('products.product');
+    async addProductToCart( {cid, pid, quantity} ) {
+        const cart = await cartModel.findById(cid);
         if (!cart) {
-            throw new Error('Carrito no encontrado');
+            throw new Error('Cart not found');
         }
-        if (!pid) {
-            throw new Error('El ID del producto no puede ser nulo');
-        }
+      
+        const productIndex = cart.products.findIndex(p => p.product.toString() === pid);
+      if (productIndex > -1) {
+        // Si el producto ya está en el carrito, actualiza la cantidad
+        cart.products[productIndex].quantity += quantity;
+      } else {
+        // Si el producto no está en el carrito, agrégalo
+        cart.products.push({ product: pid, quantity });
+      }
 
-        const productIndex = cart.products.findIndex(p => p.product._id.toString() === pid);
-        if (productIndex !== -1) {
-            cart.products[productIndex].quantity += quantity;
-        } else {
-            cart.products.push({ product: pid, quantity })
-        };
-
-        await cart.save();
-        return cartModel.findOne({ _id: cid }).populate('products.product').lean(); // Retorna el carrito actualizado y populado
+      await cart.save();
+      return cart;
     }
 
 

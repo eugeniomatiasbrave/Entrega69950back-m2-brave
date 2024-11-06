@@ -36,8 +36,9 @@ const login = (req,res)=>{
     console.log(req.user);
 	const sessionUser = new PresentUserDTO(req.user);
 	const token = jwt.sign(sessionUser.toObject(), SECRET_KEY ,{expiresIn:'15d'}); // convierto a sessionUser en un objeto plano
-	res.cookie('tokencito',token).send({status:"success",message:"logged in"});
+	res.cookie('tokencito',token, { httpOnly: true }).redirect('/');
     console.log(token);
+ // Redirige a la página de inicio
 }
 
 const current = (req,res)=>{
@@ -50,7 +51,7 @@ const current = (req,res)=>{
 }
 
 const logout = (req,res)=>{ 
-	res.clearCookie('tokencito').send({ status: "success", message: "logged out" });
+	res.clearCookie('tokencito').redirect('/');
 }
 
 export default { 

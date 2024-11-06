@@ -1,5 +1,6 @@
 import express from "express";
-import handlebars from 'express-handlebars';
+import Handlebars from 'handlebars';
+import exphbs from 'express-handlebars';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
@@ -21,9 +22,19 @@ const io = new Server(server);
 mongoose.connect(config.mongo.URL);
 
 //Handlebars Configuración
-app.engine('handlebars', handlebars.engine());
+
+const handlebars = exphbs.create({
+    // Configuración de Handlebars
+    handlebars: Handlebars,
+    runtimeOptions: {
+      allowProtoPropertiesByDefault: true,
+      allowProtoMethodsByDefault: true,
+    },
+  });
+  
+  app.engine('handlebars', handlebars.engine);
+  app.set('view engine', 'handlebars');
 app.set('views', `${__dirname}/views`);
-app.set('view engine', 'handlebars');
 
 app.use(express.static(`${__dirname}/public`));
 app.use(express.json());

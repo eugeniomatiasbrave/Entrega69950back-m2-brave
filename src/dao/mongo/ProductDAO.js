@@ -24,7 +24,7 @@ export default class ProductDAO {
     };
     
     getBy(id) {
-        return this.model.findById(id); 
+        return productModel.findById(id); 
     }
     
     create (product){ // Crea uno nuevo
