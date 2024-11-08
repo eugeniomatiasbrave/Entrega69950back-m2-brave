@@ -18,7 +18,7 @@
   {{/each}}
 
 
-  <form action="/api/carts/{{cartId}}/product/{{product._id}}" method="POST">
+  <form id="form-detail" action="/api/carts/{{cartId}}/product/{{product._id}}" method="POST">
     <div class="compact bg-base-200 py-2">
       <label class="label">
         <span class="label-text">Indicar Cantidad</span>
@@ -30,3 +30,5 @@
     </div>
   </form>
 </div>
+
+<script src="/js/details.js"></script>

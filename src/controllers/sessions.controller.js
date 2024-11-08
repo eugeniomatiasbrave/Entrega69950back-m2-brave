@@ -32,13 +32,12 @@ const register = async (req,res)=>{
     res.sendSuccess("Registered");
 }
 
-const login = (req,res)=>{ 
-    console.log(req.user);
+const login = async (req,res)=>{ 
 	const sessionUser = new PresentUserDTO(req.user);
 	const token = jwt.sign(sessionUser.toObject(), SECRET_KEY ,{expiresIn:'15d'}); // convierto a sessionUser en un objeto plano
-	res.cookie('tokencito',token, { httpOnly: true }).redirect('/');
+	res.cookie('tokencito',token);
     console.log(token);
- // Redirige a la página de inicio
+    res.send({ status: "success", message: "Logged in successfully", token });  
 }
 
 const current = (req,res)=>{

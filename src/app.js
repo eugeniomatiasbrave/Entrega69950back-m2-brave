@@ -30,7 +30,10 @@ const handlebars = exphbs.create({
       allowProtoPropertiesByDefault: true,
       allowProtoMethodsByDefault: true,
     },
-  });
+    helpers: {
+        multiply: (a, b) => a * b
+    }
+});
   
   app.engine('handlebars', handlebars.engine);
   app.set('view engine', 'handlebars');
@@ -90,4 +93,5 @@ io.on('connection', async (socket) => {
             console.error('Error updating products:', error);
         }
     });
+
 });

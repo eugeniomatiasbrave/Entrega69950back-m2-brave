@@ -1,5 +1,5 @@
 import cartModel from './models/cart.model.js';
-import productModel from './models/product.model.js';
+
 
 export default class CartDAO {
 	
@@ -35,19 +35,18 @@ export default class CartDAO {
       return cart;
     }
 
-
     //Metodo elimina un product del carrito
     delete({ cid, pid }) {
         return cartModel.updateOne(
-            { _id: String(cid) },
-            { $pull: { products: { _id: pid } } }
+            { _id: cid },
+            { $pull: { products: { product: pid } } }
         );
     }
 
     // Método deleteCard, no limina el carrito
     deleteAll(cid) {
         return cartModel.updateOne(
-            { _id: String(cid) },
+            { _id: cid },
             { $set: { products: [] } }
         );
     }
@@ -55,7 +54,7 @@ export default class CartDAO {
 // Metodo para actualizar todos los productos
     update({ cid, products }) {
         return cartModel.updateOne(
-            { _id: String(cid) },
+            { _id: cid },
             { $set: { products: products } }
         );
     }
@@ -63,7 +62,7 @@ export default class CartDAO {
 // Metodo para actualizar la cantidad del producto
     updateQuantity({cid, pid, quantity}) {
         return cartModel.updateOne(
-            { _id: String(cid), "products.product": pid },
+            { _id: cid , "products.product": pid },
             { $set: { "products.$.quantity": quantity } }
         );
     }

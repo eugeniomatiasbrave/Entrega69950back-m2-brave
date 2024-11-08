@@ -55,8 +55,8 @@ const addProductToCart = async (req, res) => {
           return res.status(404).send({ status: "error", error: 'Producto no encontrado' });
       }
 
-      const result = await cartsService.addProductToCart( {cid, pid, quantity} );
-      res.status(200).send({ status: "success", message: 'Producto agregado al carrito', data: result });
+      const result = await cartsService.addProductToCart({cid,pid,quantity} );
+      res.status(200).redirect('/carts');
   } catch (error) {
       console.error('Error al agregar el producto al carrito:', error);
       res.status(500).send({ status: "error", error: 'Error al agregar el producto al carrito' });
@@ -67,7 +67,11 @@ const deleteProductCart = async (req,res) => {
   try {
     const cid = req.params.cid;
     const pid = req.params.pid;
-    const result = await cartsService.deleteProductCart(cid, pid);
+
+    console.log('cid',cid);
+    console.log('pid',pid);
+
+    const result = await cartsService.deleteProductCart({cid, pid});
     res.send({ message: 'Producto eliminado del carrito', data: result });
   } catch (error) {
     console.error('Error al eliminar el producto del carrito:', error);
@@ -122,7 +126,7 @@ const updateProductQuantity = async (req, res) => {
       res.status(500).send({ status: "error", error: 'Error al actualizar la cantidad del producto en el carrito' });
   }
 };
-
+/*
 const purchaseCart = async (req, res) => {
     const { cid } = req.params;
     const user = usersService.getUserById(req.user._id);
@@ -178,6 +182,7 @@ const purchaseCart = async (req, res) => {
       insufficientStockProducts
     });
 }
+    */
   
 
 export default { 
@@ -189,7 +194,7 @@ export default {
 	deleteProductCart,
 	updateCart,
 	updateProductQuantity,
-  purchaseCart
+ // purchaseCart
 };
 
 

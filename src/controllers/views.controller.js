@@ -66,8 +66,16 @@ const renderProductDetail = async (req, res) => {
 };
 
 const renderCartById = async (req, res) => { // muestro el carrito del usuario
-    const cart = await cartsService.getCartById(req.params.cid);
-    res.render('Cart', { cart });
+
+    try {
+        const cart = await cartsService.getCartById(req.params.cid);
+        const cartId = cart._id;
+
+        res.render('Cart', { cart , cartId });
+    } catch (error) {
+        console.error('Error al obtener el carrito:', error);
+        res.status(500).send({ status: "error", error: 'Error al obtener el carrito' });
+    }
 };
 
 const error = (req, res) => {
