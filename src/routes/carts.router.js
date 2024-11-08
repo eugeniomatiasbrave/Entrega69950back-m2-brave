@@ -8,10 +8,9 @@ router.get('/', executePolicies(['USER']), cartsController.getCarts); // probada
 router.get('/:cid', executePolicies(['USER']), cartsController.getCartById); // muestro el carrito del usuario
 router.post('/', executePolicies(['USER']), cartsController.createCart);
 router.post('/:cid/product/:pid', cartsController.addProductToCart); 
-router.delete('/:cid', executePolicies(['USER']), cartsController.deleteAllProductsCid);
 router.delete('/:cid/products/:pid', cartsController.deleteProductCart);
-router.put('/:cid', executePolicies(['USER']), cartsController.updateCart);
-router.put('/:cid/products/:pid', executePolicies(['USER']), cartsController.updateProductQuantity);
+router.put('/:cid/products', cartsController.cleanToCart)
+router.put('/:cid/products/:pid', cartsController.updateProductQuantity);
 //router.post('/:cid/purchase', executePolicies(['USER']), cartsController.purchaseCart);
 
 export default router;

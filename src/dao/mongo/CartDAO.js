@@ -7,9 +7,12 @@ export default class CartDAO {
         return cartModel.find( opts ).lean(); // Busca todos
 	}
 
-    getBy (params) {
-		return cartModel.findOne(params).lean(); // Busca solo uno
-	};
+    getBy(params) {
+        if (typeof params === 'string') {
+            params = { _id: params };
+        }
+        return cartModel.findOne(params).lean(); // Busca solo uno
+    }
 
     create() {
         return cartModel.create({ products: [] });
@@ -43,30 +46,22 @@ export default class CartDAO {
         );
     }
 
-    // Método deleteCard, no limina el carrito
-    deleteAll(cid) {
+    //metodo para vaciar el carrito con mongodb
+    clean(clean) {
         return cartModel.updateOne(
-            { _id: cid },
+            { _id: clean.cid },
             { $set: { products: [] } }
         );
-    }
+      }
 
-// Metodo para actualizar todos los productos
-    update({ cid, products }) {
-        return cartModel.updateOne(
-            { _id: cid },
-            { $set: { products: products } }
-        );
-    }
 
 // Metodo para actualizar la cantidad del producto
-    updateQuantity({cid, pid, quantity}) {
-        return cartModel.updateOne(
-            { _id: cid , "products.product": pid },
-            { $set: { "products.$.quantity": quantity } }
-        );
-    }
+updateQuantity({ cid, pid, quantity }) {
+    return cartModel.updateOne(
+        { _id: cid, "products.product": pid },
+        { $set: { "products.$.quantity": quantity } }
+    );
 }
 
-
+}
   

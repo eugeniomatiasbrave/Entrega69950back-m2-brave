@@ -21,22 +21,27 @@ const io = new Server(server);
 
 mongoose.connect(config.mongo.URL);
 
-//Handlebars Configuración
+// Register Handlebars helpers
+Handlebars.registerHelper('multiply', (a, b) => a * b);
+Handlebars.registerHelper('calculateTotal', function(products) {
+  let total = 0;
+  products.forEach(product => {
+    total += product.quantity * product.product.price;
+  });
+  return total.toFixed(2); // Formato de dos decimales
+});
 
+// Handlebars Configuration
 const handlebars = exphbs.create({
-    // Configuración de Handlebars
     handlebars: Handlebars,
     runtimeOptions: {
       allowProtoPropertiesByDefault: true,
       allowProtoMethodsByDefault: true,
     },
-    helpers: {
-        multiply: (a, b) => a * b
-    }
-});
+  });
   
-  app.engine('handlebars', handlebars.engine);
-  app.set('view engine', 'handlebars');
+app.engine('handlebars', handlebars.engine);
+app.set('view engine', 'handlebars');
 app.set('views', `${__dirname}/views`);
 
 app.use(express.static(`${__dirname}/public`));

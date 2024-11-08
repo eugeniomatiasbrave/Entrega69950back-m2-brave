@@ -25,13 +25,10 @@ export default class CartRepository {
         return this.dao.delete({ cid, pid });
     };
 
-    deleteAllProductsCid(cid) {
-        return this.dao.deleteAll(cid);
-    };
-
-    updateCart({ cid, products }) {
-        return this.dao.update({ cid, products });
-    };
+    // metodo para vaciar el carrito
+    cleanToCart(cid) {
+        return this.dao.clean(cid);
+      }
 
     updateProductQuantity({ cid, pid, quantity }) {
         return this.dao.updateQuantity({ cid, pid, quantity });

@@ -1,4 +1,6 @@
-import { cartsService, productsService, ticketsService , usersService} from "../services/repositories.js";
+import { cartsService, productsService} from "../services/repositories.js";
+
+
 
 const getCarts = async (req,res) => {  // probada ok
   try {
@@ -43,11 +45,12 @@ const createCart = async (req,res) => {
 
 const addProductToCart = async (req, res) => {
   const { cid, pid } = req.params;
-  const { quantity  } = req.body;
+  let { quantity  } = req.body;
 
-  if ( quantity === "" || quantity === undefined || quantity === null) {
-    quantity = 1;
-  }
+// Si quantity no está definido o es null, establecerlo en 1
+if (!quantity) {
+  quantity = 1;
+}
 
   try {
       const product = await productsService.getProductById(pid);
@@ -68,9 +71,6 @@ const deleteProductCart = async (req,res) => {
     const cid = req.params.cid;
     const pid = req.params.pid;
 
-    console.log('cid',cid);
-    console.log('pid',pid);
-
     const result = await cartsService.deleteProductCart({cid, pid});
     res.send({ message: 'Producto eliminado del carrito', data: result });
   } catch (error) {
@@ -79,38 +79,23 @@ const deleteProductCart = async (req,res) => {
   }
 };
 
-const deleteAllProductsCid = async (req, res) => {
+const cleanToCart = async (req, res) => {
+  const { cid } = req.params;
   try {
-    const { cid } = req.params;
-    const result = await cartsService.deleteAllProductsCid(cid);
-    if (result.nModified === 0) {
-      return res.status(500).send({ status: "error", error: 'Error al eliminar todos los productos del carrito' });
-    }
-    res.send({ status: "success", message: 'Todos los productos eliminados del carrito' });
+
+const clean = { 
+  cid: cid,
+  products: []
+ };
+
+    const result = await cartsService.cleanToCart(clean);
+    res.send({ status: "success", message: 'Carrito vaciado', data: result });
   } catch (error) {
-    console.error('Error al eliminar todos los productos del carrito:', error);
-    res.status(500).send({ status: "error", error: 'Error al eliminar todos los productos del carrito' });
+    console.error('Error al vaciar el carrito:', error);
+    res.status(500).send({ status: "error", error: 'Error al vaciar el carrito' });
   }
 };
 
-const updateCart = async (req,res) => {
-  const cid = req.params.cid;
-  const products = req.body.products; // Suponiendo que se envía un array de productos en el cuerpo de la solicitud
-  const cart = await cartsService.getCartById(String(cid));
-  if (cart === undefined) {
-    return res.status(500).send({ status:"error", error: ' No se encontro el carrito' });
-  }
-  try {
-      const updateResult = await cartsService.updateCart(cid, products);
-      if (updateResult.nModified === 0) {
-          return res.status(500).send({ status: "error", error: 'Error al actualizar los productos del carrito' });
-      }
-      res.send({ status: "success", message: 'Todos los productos actualizados en el carrito', data: products });
-  } catch (error) {
-      console.error('Error al actualizar los productos del carrito:', error);
-      res.status(500).send({ status: "error", error: 'Error al actualizar los productos del carrito' });
-  }
-};
 
 const updateProductQuantity = async (req, res) => {
   try {
@@ -190,11 +175,9 @@ export default {
 	getCartById,
 	createCart,
 	addProductToCart,
-	deleteAllProductsCid,
 	deleteProductCart,
-	updateCart,
-	updateProductQuantity,
- // purchaseCart
+	cleanToCart,
+	updateProductQuantity
 };
 
 

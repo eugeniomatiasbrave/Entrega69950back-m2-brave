@@ -27,8 +27,16 @@
             <td>{{multiply this.quantity this.product.price}}</td>
           </tr>
         {{/each}}
+        <tr>
+          <td colspan="5" class="text-right font-bold">Total:</td>
+          <td>{{calculateTotal cart.products}}</td>
+        </tr>
       </tbody>
     </table>
+     <form class="delete-all-products-cid" action="/api/carts/{{cartId}}/products" method="PUT">
+        <input type="hidden" name="_method" value="PUT">
+        <button type="submit" class="btn btn-error mt-4">Eliminar Todos</button>
+    </form>
   </div>
 
 <script src="/js/cart.js"></script>
