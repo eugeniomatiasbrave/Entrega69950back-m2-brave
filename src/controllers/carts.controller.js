@@ -1,5 +1,4 @@
-import { cartsService, productsService} from "../services/repositories.js";
-
+import { cartsService, productsService, ticketsService } from "../services/repositories.js";
 
 
 const getCarts = async (req,res) => {  // probada ok
@@ -111,63 +110,69 @@ const updateProductQuantity = async (req, res) => {
       res.status(500).send({ status: "error", error: 'Error al actualizar la cantidad del producto en el carrito' });
   }
 };
-/*
-const purchaseCart = async (req, res) => {
-    const { cid } = req.params;
-    const user = usersService.getUserById(req.user._id);
 
-    if (!user) {
+const purchaseCart = async (req, res) => {
+   const { cid } = req.params;
+   const user = req.user; // Obtener el usuario autenticado por req.user
+
+   if (!cid) {
+     return res.status(400).send({ status: "error", error: 'cid es requerido' });
+    }
+   if (!user) {
       return res.status(404).send({ status: "error", error: 'Usuario no encontrado' });
     }
-    const purchaserEmail = user.email;
-    ///const purchaserEmail = req.user.email; // Obtener el correo del usuario autenticado por req.user
-    console.log('Email de ticket', purchaserEmail);
   
-    const cart = await cartsService.getCartById(cid);
+  const purchaserEmail = user.email; // Obtener el correo del usuario autenticado por req.user
+  
+  const cart = await cartsService.getCartById(cid);
   
     if (!cart) {
       return res.status(500).send({ status: "error", error: 'No se encontró el carrito' });
     }
-  
-    const productsInCart = cart.products;
-    const productsToPurchase = []; // Productos que se pueden comprar
-    const insufficientStockProducts = []; // Productos con stock insuficiente
-  
-    for (const item of productsInCart) {
-      const product = await productsService.getProductById(item.product._id);
-  
-      // Verificar si hay suficiente stock para la cantidad solicitada
-      if (product.stock >= item.quantity) {
-        product.stock -= item.quantity;
-        await productsService.updateProduct(product._id, { stock: product.stock });
-        productsToPurchase.push(item);
-      } else {
-        insufficientStockProducts.push(item);
-      }
-    }
-  
-    if (productsToPurchase.length === 0) {
-      return res.status(400).send({ status: "error", error: 'No hay productos con stock suficiente para la compra de '+ insufficientStockProducts.length + ' productos' });
-    }
-           
-    // Crear un ticket para la compra
-    const ticket = {
-      products: productsToPurchase,
-      total: productsToPurchase.reduce((total, item) => total + item.product.price * item.quantity, 0),
-      purchaser: purchaserEmail
-    };
 
-    const response = await ticketsService.createTicket({ticket});
- 
-    res.send({
-      status: "success",
-      message: 'Compra realizada con éxito',
-      response,
-      purchasedProducts: productsToPurchase,
-      insufficientStockProducts
-    });
+  const productsInCart = cart.products;
+  const productsToPurchase = []; // Productos que se pueden comprar
+  const insufficientStockProducts = []; // Productos con stock insuficiente
+
+  for (const item of productsInCart) {
+    const product = await productsService.getProductById(item.product._id);
+
+    // Verificar si hay suficiente stock para la cantidad solicitada
+    if (product.stock >= item.quantity) {
+      product.stock -= item.quantity;
+      await productsService.updateProduct(product._id, { stock: product.stock });
+      productsToPurchase.push(item);
+    } else {
+      insufficientStockProducts.push(item);
+    }
+  }
+
+  if (productsToPurchase.length === 0) {
+    return res.status(400).send({ status: "error", error: 'No hay productos con stock suficiente para la compra de '+ insufficientStockProducts.length + ' productos' });
+  }
+
+  const ticket = {
+    code: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+    products: productsToPurchase,
+    amount: productsToPurchase.reduce((total, item) => total + item.product.price * item.quantity, 0),
+    purchaser: purchaserEmail
+  };
+
+  const response = await ticketsService.createTicket(ticket);
+
+  console.log('response:', response);
+
+  // Limpiar el carrito
+
+  res.send({
+    status: "success",
+    message: 'Compra realizada con éxito',
+    response,
+    purchasedProducts: productsToPurchase,
+    insufficientStockProducts
+  });
+
 }
-    */
   
 
 export default { 
@@ -177,7 +182,8 @@ export default {
 	addProductToCart,
 	deleteProductCart,
 	cleanToCart,
-	updateProductQuantity
+	updateProductQuantity,
+  purchaseCart
 };
 
 

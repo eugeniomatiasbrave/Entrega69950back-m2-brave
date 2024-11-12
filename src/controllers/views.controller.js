@@ -1,4 +1,4 @@
-import {productsService, cartsService} from "../services/repositories.js";
+import {productsService, cartsService, ticketsService} from "../services/repositories.js";
 
 const renderHome = (req, res) => {
     res.render('Home');
@@ -23,7 +23,6 @@ const renderProducts = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 4;
     const sort = req.query.sort || "asc";
-
     const productsPaginate = await productsService.getProducts(page, limit, sort);
     const products = productsPaginate.docs;
     const { hasPrevPage, hasNextPage, prevPage, nextPage, page: currentPage } = productsPaginate;
@@ -32,7 +31,6 @@ const renderProducts = async (req, res) => {
     if (!products) {
         return res.render('404');
     }
-
     res.render("Products", {
         products,
         page: currentPage,
@@ -57,7 +55,6 @@ const renderProductDetail = async (req, res) => {
     if (!product) {
       return res.status(404).send({ status: "error", error: 'Producto no encontrado' });
     }
-
     res.render('ProductDetail', { product, cartId });
   } catch (error) {
     console.error('Error al obtener el detalle del producto:', error);
@@ -66,11 +63,9 @@ const renderProductDetail = async (req, res) => {
 };
 
 const renderCartById = async (req, res) => { // muestro el carrito del usuario
-
     try {
         const cart = await cartsService.getCartById(req.params.cid);
         const cartId = cart._id;
-
         res.render('Cart', { cart , cartId });
     } catch (error) {
         console.error('Error al obtener el carrito:', error);
@@ -80,6 +75,13 @@ const renderCartById = async (req, res) => { // muestro el carrito del usuario
 
 const error = (req, res) => {
     res.render('404');
+};
+
+const renderTicket = async (req, res) => {
+
+    
+    const ticket = await ticketsService.getTicketBy(req.user._id);
+    res.render('Ticket', { ticket});
 }
 
 
@@ -92,5 +94,6 @@ export default {
     renderRealTimeProducts,
     renderProductDetail,
     renderCartById,
-    error
+    error,
+    renderTicket
 };

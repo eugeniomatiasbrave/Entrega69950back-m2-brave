@@ -21,7 +21,7 @@ export default class ProductRepository {
     };
     
     updateProduct(pid,updateData){ // edita uno
-        return pthis.dao.update(pid,updateData);
+        return this.dao.update(pid,updateData);
     };
     
     deleteProduct(pid){ // elimina uno

@@ -7,7 +7,10 @@ const schema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        default: () => Math.random().toString(36).substr(2, 9).toUpperCase() // Genera un código único
+    },
+    products: {
+        type: Array,
+        required: true
     },
     purchase_datetime: {
         type: Date,

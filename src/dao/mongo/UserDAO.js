@@ -7,7 +7,7 @@ export default class UserDAO {
     }
 
     getUserById(userId){
-        return usersModel.findOne(userId)
+        return usersModel.findOne(userId).lean();
     }
    
     getUserByEmail(email){

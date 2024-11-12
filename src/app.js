@@ -1,7 +1,7 @@
 import express from "express";
 import Handlebars from 'handlebars';
 import exphbs from 'express-handlebars';
-import mongoose from 'mongoose';
+import dbConnect from "./config/mongo.js";
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import { Server } from "socket.io";
@@ -16,10 +16,12 @@ import config from './config/config.js';
 
 const app = express();
 const PORT = config.app.PORT;
-const server =app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const server =app.listen(PORT, () => 
+   console.log(`****SERVER RUNNING ON PORT ${PORT} **** - `+new Date().toLocaleString())) ;
 const io = new Server(server);
 
-mongoose.connect(config.mongo.URL);
+// Conexión a la base de datos
+dbConnect();
 
 // Register Handlebars helpers
 Handlebars.registerHelper('multiply', (a, b) => a * b);
