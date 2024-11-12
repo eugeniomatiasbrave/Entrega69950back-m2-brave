@@ -28,6 +28,7 @@ const schema = new mongoose.Schema({
 	cartId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Carts'
+
 	},
 	role: {
 		type:String,
@@ -35,9 +36,6 @@ const schema = new mongoose.Schema({
 	}
 });
 
-schema.pre(['find','findOne'], function(){
-	this.populate('cartId')
-})
 
 const userModel = mongoose.model(collection, schema);
 

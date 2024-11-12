@@ -8,7 +8,7 @@ const router = Router();
 
 router.get('/', executePolicies(['USER']), cartsController.getCarts); // probada ok
 router.get('/:cid', executePolicies(['USER']), cartsController.getCartById); // muestro el carrito del usuario
-router.post('/', executePolicies(['USER']), cartsController.createCart);
+router.post('/', cartsController.createCart);
 router.post('/:cid/product/:pid', cartsController.addProductToCart); 
 router.delete('/:cid/products/:pid', cartsController.deleteProductCart);
 router.put('/:cid/products', cartsController.cleanToCart)

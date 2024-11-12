@@ -163,6 +163,9 @@ const purchaseCart = async (req, res) => {
   console.log('response:', response);
 
   // Limpiar el carrito
+ 
+
+
 
   res.send({
     status: "success",

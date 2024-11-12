@@ -9,28 +9,43 @@ const SECRET_KEY = config.jwt.SECRET_KEY;
 const ADMIN_USER = config.app.ADMIN_USER;
 const ADMIN_PWD = config.app.ADMIN_PWD;
 
-const register = async (req,res)=>{ 
-	const { email, password, firstName, lastName, birthDate } = req.body;
+const register = async (req, res) => {
+    try {
+        const { email, password, firstName, lastName, birthDate } = req.body;
 
-    let role = 'user';
-    if (email === ADMIN_USER && password === ADMIN_PWD) {
-        role = 'admin';
+        console.log('body',req.body);
+
+        // Validaciones de los campos
+        if (!email || !password || !firstName || !lastName || !birthDate) {
+            return res.status(400).send({ message: "Todos los campos son obligatorios" });
+        }
+
+        let role = 'user';
+        if (email === ADMIN_USER && password === ADMIN_PWD) {
+            role = 'admin';
+        }
+
+        const authService = new AuthService();
+        const hashedPassword = await authService.hashPassword(password);
+
+        const newUser = {
+            firstName,
+            lastName,
+            email,
+            birthDate,
+            password: hashedPassword,
+            role,
+            cartId: null
+        };
+        console.log( 'new User:', newUser);
+
+        await usersService.createUser(newUser);
+        res.send("Registered");
+    } catch (error) {
+        res.status(500).send({ message: "Error al registrar el usuario", error: error.message });
     }
+};
 
-	const authService = new AuthService();
-    const hashedPassword = await authService.hashPassword(password);
-    const newUser = {
-        firstName,
-        lastName,
-        email,
-        birthDate,
-        password: hashedPassword,
-        role
-    };
-
-    await usersService.createUser(newUser);
-    res.sendSuccess("Registered");
-}
 
 const login = async (req,res)=>{ 
 	const sessionUser = new PresentUserDTO(req.user);

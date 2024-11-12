@@ -36,6 +36,9 @@ const initializePassportConfig = () => {
                 role = 'admin';
             }
 
+            // creo el carrito para el user
+            const newCart = await cartsService.createCart();
+
             const newUser = {
                 firstName,
                 lastName,
@@ -43,15 +46,13 @@ const initializePassportConfig = () => {
                 birthDate: parsedDate,
                 password: hashedPassword,
                 role,
-                cartId: null, // Initialize cartId as null
+                cartId: newCart._id // Initialize cartId as null
             };
             const result = await usersService.createUser(newUser);
 
             if (result) {
-                // Create a new cart for the user
-                const newCart = await cartsService.createCart();
                 // Update the user's cart reference
-                await usersService.updateUserCart(result._id, newCart._id);
+                await usersService.updateUser(result._id, { cartId: newCart._id });
             }
             
             const cart = await cartsService.getCartById(result.cartId);
