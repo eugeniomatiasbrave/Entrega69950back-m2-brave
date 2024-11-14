@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import mongoosPaginate from 'mongoose-paginate-v2' 
 
-const collection = "Products"
+const collection = "Products";
 
 const schema = new mongoose.Schema({
 
@@ -9,7 +9,10 @@ const schema = new mongoose.Schema({
         type:String,
         required:true
     },
-    description:String,
+    description:{
+        type:String,
+        required:true
+    },
 	price: {
         type: Number,
         required: true,
@@ -24,11 +27,15 @@ const schema = new mongoose.Schema({
         type:Boolean, 
         default:true
     },
-	stock: {type: Number,
-    required: true,
-    min: 0
+	stock: {
+        type: Number,
+        required: true,
+        min: 0
     },
-	category:String,
+	category: {
+        type:String,
+        required:true
+    },
     slug: {
         type: String,
         unique: true

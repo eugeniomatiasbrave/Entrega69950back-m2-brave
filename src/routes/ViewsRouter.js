@@ -5,7 +5,7 @@ import { executePolicies } from '../middlewares/policies.js';
 
 class ViewsRouter extends BaseRouter {
     init(){
-        this.get('/', ['PUBLIC'],executePolicies(['USER']), viewsController.renderHome);
+        this.get('/', ['PUBLIC'], viewsController.renderHome);
         this.get('/register', ['PUBLIC'], viewsController.renderRegister);
         this.get('/login', ['PUBLIC'], viewsController.renderLogin);
         this.get('/logout', ['USER', 'ADMIN'], executePolicies(['USER', 'ADMIN']), sessionsController.logout); // Ruta de logout

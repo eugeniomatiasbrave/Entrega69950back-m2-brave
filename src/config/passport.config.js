@@ -11,6 +11,7 @@ const ADMIN_USER = config.app.ADMIN_USER;
 const ADMIN_PWD = config.app.ADMIN_PWD;
 
 const initializePassportConfig = () => {
+    
     passport.use('register', new LocalStrategy({
         usernameField: 'email',
         passReqToCallback: true

@@ -1,10 +1,12 @@
+
+
 <h1>Detalle del Producto</h1>
 
 <div class="card shadow-lg compact bg-base-100 w-1/4 border border-white">
   {{#each product}}
     <div class="flex flex-wrap gap-2">
       {{#each this.thumbnails}}
-        <img src={{this.path}} class="w-52 h-52 object-cover rounded-lg">
+        <img src="{{this.path}}" class="w-52 h-52 object-cover rounded-lg">
       {{/each}}
     </div>
     <p>{{this._id}}</p>

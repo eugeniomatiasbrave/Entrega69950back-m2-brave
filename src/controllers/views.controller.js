@@ -41,20 +41,43 @@ const renderProducts = async (req, res) => {
     });
 };
 
-const renderRealTimeProducts = (req, res) => {
-    res.render("RealTimeProducts");
+const renderRealTimeProducts = async (req, res) => {
+
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 4;
+    const sort = req.query.sort || "asc";
+    const productsPaginate = await productsService.getProducts(page, limit, sort);
+    const products = productsPaginate.docs;
+    const { hasPrevPage, hasNextPage, prevPage, nextPage, page: currentPage } = productsPaginate;
+    console.log(productsPaginate);
+
+    res.render("RealTimeProducts", {
+        products,
+        page: currentPage,
+        hasPrevPage,
+        hasNextPage,
+        prevPage,
+        nextPage
+    });
 };
 
 const renderProductDetail = async (req, res) => {
   try {
     const product = await productsService.getProductById(req.params.pid);
     const cart = await cartsService.getCartById(req.params.cid);
-    const cartId = cart._id;
-    console.log('cart',cart._id)
+    
 
     if (!product) {
       return res.status(404).send({ status: "error", error: 'Producto no encontrado' });
     }
+
+    if (!cart) {
+        return res.status(404).send({ status: "error", error: 'Carrito no encontrado' });
+      }
+
+    const cartId = cart._id;
+    console.log('cart',cart._id)
+
     res.render('ProductDetail', { product, cartId });
   } catch (error) {
     console.error('Error al obtener el detalle del producto:', error);

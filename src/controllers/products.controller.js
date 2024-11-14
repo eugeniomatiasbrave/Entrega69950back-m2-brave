@@ -1,11 +1,9 @@
 import { productsService } from "../services/repositories.js";
 import { makeid } from "../utils.js";
-//import uploader from '../services/uploader.js';
 
 const getProducts = async (req,res) => {
     try {
         const products = await productsService.getProducts();
-        req.io.emit('Products', products); // Emite los productos a través de WebSocket
         res.send({ status: "success", data: products });
     } catch (error) {
         res.status(500).send({ status: "error", error: 'Error al obtener los productos' });
@@ -27,16 +25,16 @@ const getProductById = async (req,res) => {
 };
 
 const createProduct = async (req,res) => {
-//router.post('/', uploader.array('thumbnail', 3), async (req, res) => ver si funciona
+
     const { title, description, code, price, category, stock } = req.body;
 
-    if (isNaN(price) || isNaN(stock)) {
-        return res.status(400).send({ status: "error", error: 'Los datos proporcionados no son numericos' });
-    };
+    console.log( title, description, code, price, category, stock)
 
+    
     if (!title || !description || !code || !price || !category || !stock) {
         return res.status(400).send({ status: "error", error: 'Faltan datos para crear el producto' });
-    };
+    }
+   
 
     try {
         const newProduct = {
@@ -45,6 +43,7 @@ const createProduct = async (req,res) => {
             price,
             code,
             stock,
+            status: true,
             category,
             slug: `${title}_${makeid(4)}`,
             thumbnails: []
@@ -56,8 +55,6 @@ const createProduct = async (req,res) => {
         if (!result) {
             return res.status(500).send({ status: "error", error: 'Error al crear el producto' });
         }
-        const productsViews = await productsService.getProductsViews();
-        req.io.emit('ProductsIo', productsViews);
         res.send({ status: "success", message: 'Producto creado', payload: result }); // data: result es el producto creado.
     } catch (error) {
         console.log(error);
@@ -76,8 +73,6 @@ const deleteProduct = async (req,res) => {
         if (!deletedProduct) {
             return res.status(500).send({ status: "error", error: 'Error al borrar el producto' });
         }
-        const updatedProducts = await productsService.getProducts();
-        req.io.emit('ProductsIo', updatedProducts); // Emite evento de WebSocket con la lista actualizada de productos
         res.send({ status: "success", data: deletedProduct });
     } catch (error) {
         console.error('Error al borrar el producto:', error);
