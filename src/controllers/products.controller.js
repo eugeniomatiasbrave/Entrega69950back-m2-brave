@@ -4,9 +4,9 @@ import { makeid } from "../utils.js";
 const getProducts = async (req,res) => {
     try {
         const products = await productsService.getProducts();
-        res.send({ status: "success", data: products });
+        res.sendSuccess(products);
     } catch (error) {
-        res.status(500).send({ status: "error", error: 'Error al obtener los productos' });
+        res.sendBadRequest('ERROR_GET_PRODUCTS');
     }
 };
 
@@ -25,17 +25,8 @@ const getProductById = async (req,res) => {
 };
 
 const createProduct = async (req,res) => {
-
     const { title, description, code, price, category, stock } = req.body;
-
-    console.log( title, description, code, price, category, stock)
-
-    
-    if (!title || !description || !code || !price || !category || !stock) {
-        return res.status(400).send({ status: "error", error: 'Faltan datos para crear el producto' });
-    }
    
-
     try {
         const newProduct = {
             title,
@@ -53,12 +44,12 @@ const createProduct = async (req,res) => {
         }
         const result = await productsService.createProduct(newProduct);
         if (!result) {
-            return res.status(500).send({ status: "error", error: 'Error al crear el producto' });
+            return res.sendBadRequest('ERROR_CREATE_PRODUCT');
         }
-        res.send({ status: "success", message: 'Producto creado', payload: result }); // data: result es el producto creado.
+        res.sendSuccess(result); // data: result es el producto creado.
     } catch (error) {
         console.log(error);
-        res.status(500).send({ status: 'error', error: error });
+        res.sendBadRequest('ERROR_CREATE_PRODUCT');
     }
 };
 
@@ -84,18 +75,12 @@ const updateProduct = async (req,res) => {
     try {
         const pid = req.params.pid;
         const updateData = req.body;
-        // Me aseguro que el id no se actualice en la DB
-        if (updateData.pid) {
+
+        // Validaciones en meddleware
+        if (updateData.pid) { // Me aseguro que el id no se actualice en la DB
             delete updateData.pid;
         }
-        // Me aseguro que se actualicen todos los campos.
-        if (!updateData.title || !updateData.description || !updateData.code || !updateData.price || !updateData.category || !updateData.stock) {
-            return res.status(400).send({ status: "error", error: 'Faltan datos para actualizar el producto' });
-        }
-        // Númerico y positivo
-        if (updateData.price && isNaN(updateData.price) || updateData.price < 0) {
-            return res.status(400).send({ status: "error", error: 'El precio debe ser un número positivo' });
-        }
+       
         const result = await productsService.updateProduct(pid, updateData);
 
         if (result === -1) {

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { passportCall } from "../middlewares/passportCall.js";
 import { executePolicies } from "../middlewares/policies.js";
+import handleHttpError from "../middlewares/handleError.js";
 
 export default class BaseRouter {
 
@@ -17,28 +18,22 @@ export default class BaseRouter {
 
     get(path,policies,...callbacks){
         if(!policies||!Array.isArray(policies)) throw new Error('Policies required for endpoint '+path);
-        this.router.get(path,this.generateCustomResponses,passportCall('current'),executePolicies(policies), this.applyCallbacks(callbacks));
+        this.router.get(path, handleHttpError ,passportCall('current'),executePolicies(policies), this.applyCallbacks(callbacks));
     }
     post(path,policies,...callbacks){
         if(!policies||!Array.isArray(policies)) throw new Error('Policies required for endpoint '+path);
-        this.router.post(path,this.generateCustomResponses,passportCall('current'),executePolicies(policies),this.applyCallbacks(callbacks));
+        this.router.post(path, handleHttpError ,passportCall('current'),executePolicies(policies),this.applyCallbacks(callbacks));
     }
     put(path,policies,...callbacks){
         if(!policies||!Array.isArray(policies)) throw new Error('Policies required for endpoint '+path);
-        this.router.put(path,this.generateCustomResponses,passportCall('current'),executePolicies(policies),this.applyCallbacks(callbacks));
+        this.router.put(path, handleHttpError ,passportCall('current'),executePolicies(policies),this.applyCallbacks(callbacks));
     }
     delete(path,policies,...callbacks){
         if(!policies||!Array.isArray(policies)) throw new Error('Policies required for endpoint '+path);
-        this.router.delete(path,this.generateCustomResponses,passportCall('current'),executePolicies(policies),this.applyCallbacks(callbacks));
+        this.router.delete(path, handleHttpError ,passportCall('current'),executePolicies(policies),this.applyCallbacks(callbacks));
     }
 
-    generateCustomResponses(req,res,next){
-        res.sendSuccess = (message) => res.status(200).send({status:"success",message});
-        res.sendBadRequest = (reason) => res.status(400).send({status:"success",error:reason});
-        res.sendUnauthorized = (reason) => res.status(404).send({ error: reason || "Unauthorized" }).render('404', { error: reason || "Unauthorized" });
-        next();
-    }
-
+   
     applyCallbacks(callbacks){
         return callbacks.map((callback)=>async(...params)=>{
             //Esta función, dentro ya tiene los params req,res,next

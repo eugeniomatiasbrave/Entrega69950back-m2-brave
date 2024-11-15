@@ -96,13 +96,11 @@ const renderCartById = async (req, res) => { // muestro el carrito del usuario
     }
 };
 
-const error = (req, res) => {
-    res.render('404');
+const renderUnauthorized = (req, res) => {
+    res.render('Unauthorized');
 };
 
 const renderTicket = async (req, res) => {
-
-    
     const ticket = await ticketsService.getTicketBy(req.user._id);
     res.render('Ticket', { ticket});
 }
@@ -117,6 +115,6 @@ export default {
     renderRealTimeProducts,
     renderProductDetail,
     renderCartById,
-    error,
+    renderUnauthorized,
     renderTicket
 };

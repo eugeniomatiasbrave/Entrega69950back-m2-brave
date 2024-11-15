@@ -16,6 +16,8 @@ class ViewsRouter extends BaseRouter {
         this.get('/detail/:pid', ['PUBLIC'] , viewsController.renderProductDetail);
         this.get('/error', ['PUBLIC'], viewsController.error);
         this.get('/ticket', ['USER'], executePolicies(['USER']),  viewsController.renderTicket);
+        this.get('/unauthorized', ['PUBLIC'], executePolicies(['PUBLIC']),viewsController.renderUnauthorized);
+       
     }
 }
 const viewsRouter = new ViewsRouter();
