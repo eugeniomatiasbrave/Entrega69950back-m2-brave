@@ -31,8 +31,7 @@ export default class BaseRouter {
     delete(path,policies,...callbacks){
         if(!policies||!Array.isArray(policies)) throw new Error('Policies required for endpoint '+path);
         this.router.delete(path, handleHttpError ,passportCall('current'),executePolicies(policies),this.applyCallbacks(callbacks));
-    }
-
+    };
    
     applyCallbacks(callbacks){
         return callbacks.map((callback)=>async(...params)=>{
@@ -45,4 +44,4 @@ export default class BaseRouter {
             }
         })
     }
-}
+};

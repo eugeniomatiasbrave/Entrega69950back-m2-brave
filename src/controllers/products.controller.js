@@ -4,9 +4,9 @@ import { makeid } from "../utils.js";
 const getProducts = async (req,res) => {
     try {
         const products = await productsService.getProducts();
-        res.sendSuccess(products);
+        res.sendSuccess(products, "Productos obtenidos con éxito");
     } catch (error) {
-        res.sendBadRequest('ERROR_GET_PRODUCTS');
+        res.sendServerError('Error al obtener los productos');
     }
 };
 
@@ -15,18 +15,17 @@ const getProductById = async (req,res) => {
         const pid = req.params.pid;
         const product = await productsService.getProductById(pid);
         if (!product) {
-            return res.status(400).send({ status: "error", error: 'No se encontró el producto con el ID: ' + pid });
+            return res.sendBadRequest('No se encontró el producto con el ID: ' + pid);
         }
-        res.send({ status: "success", data: product });
+        res.sendSuccess(product, "Producto obtenido con éxito");
     } catch (error) {
         console.error('Error al obtener el producto:', error);
-        res.status(500).send({ status: "error", error: 'Error al obtener el producto' });
+        res.sendServerError('Error al obtener el producto');
     }
 };
 
 const createProduct = async (req,res) => {
     const { title, description, code, price, category, stock } = req.body;
-   
     try {
         const newProduct = {
             title,
@@ -44,12 +43,12 @@ const createProduct = async (req,res) => {
         }
         const result = await productsService.createProduct(newProduct);
         if (!result) {
-            return res.sendBadRequest('ERROR_CREATE_PRODUCT');
+            return res.sendBadRequest('Error al crear el producto');
         }
-        res.sendSuccess(result); // data: result es el producto creado.
+        res.sendSuccess(result, "Producto creado con éxito"); // data: result es el producto creado.
     } catch (error) {
         console.log(error);
-        res.sendBadRequest('ERROR_CREATE_PRODUCT');
+        res.sendServerError('Error al crear el producto');
     }
 };
 
@@ -58,16 +57,16 @@ const deleteProduct = async (req,res) => {
     try {
         const product = await productsService.getProductById(pid);
         if (!product) {
-            return res.status(404).send({ status: "error", error: 'El producto que intentas borrar no existe' });
+            return res.sendBadRequest('El producto que intentas borrar no existe');
         }
         const deletedProduct = await productsService.deleteProduct(pid);
         if (!deletedProduct) {
-            return res.status(500).send({ status: "error", error: 'Error al borrar el producto' });
+            return res.sendServerError('Error al borrar el producto');
         }
-        res.send({ status: "success", data: deletedProduct });
+        res.sendSuccess(deletedProduct, "Producto borrado con éxito");
     } catch (error) {
         console.error('Error al borrar el producto:', error);
-        res.status(500).send({ status: "error", error: 'Hubo un problema al intentar borrar el producto' });
+        res.sendServerError('Hubo un problema al intentar borrar el producto');
     }
 };
 
@@ -75,22 +74,19 @@ const updateProduct = async (req,res) => {
     try {
         const pid = req.params.pid;
         const updateData = req.body;
-
         // Validaciones en meddleware
         if (updateData.pid) { // Me aseguro que el id no se actualice en la DB
             delete updateData.pid;
         }
-       
         const result = await productsService.updateProduct(pid, updateData);
-
         if (result === -1) {
-            return res.status(500).send({ status: "error", error: 'Error al actualizar el producto' });
+            return res.sendServerError('Error al actualizar el producto');
         }
         const updatedProduct = await productsService.getProductById(pid);
-        res.send({ status: "success", message: `Producto actualizado id: ${pid}`, data: updatedProduct });
+        res.sendSuccess(updatedProduct, "Producto actualizado con éxito");
     } catch (error) {
         console.error('Error al actualizar el producto:', error);
-        res.status(500).send({ status: "error", error: 'Error al actualizar el producto' });
+        res.sendServerError('Error al actualizar el producto');
     }
 };
 

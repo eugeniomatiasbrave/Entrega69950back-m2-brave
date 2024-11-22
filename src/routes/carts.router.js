@@ -3,7 +3,6 @@ import cartsController from "../controllers/carts.controller.js";
 import { executePolicies } from '../middlewares/policies.js';
 import { passportCall } from '../middlewares/passportCall.js';//con current traigo el usuario logueado
 
-
 const router = Router();
 
 router.get('/', executePolicies(['USER']), cartsController.getCarts); // probada ok
@@ -14,6 +13,5 @@ router.delete('/:cid/products/:pid', cartsController.deleteProductCart);
 router.put('/:cid/products', cartsController.cleanToCart)
 router.put('/:cid/products/:pid', cartsController.updateProductQuantity);
 router.post('/:cid/purchase', passportCall('current'),cartsController.purchaseCart); // permite finalizar el proceso de compra de dicho carrito.
-
 
 export default router;

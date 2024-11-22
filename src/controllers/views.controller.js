@@ -13,7 +13,7 @@ const renderLogin = (req, res) => {
 };
 
 const renderProfile = (req, res) => {
-    console.log(req.user);
+    //console.log(req.user);
     res.render('Profile', {
         user: req.user
     });
@@ -26,8 +26,7 @@ const renderProducts = async (req, res) => {
     const productsPaginate = await productsService.getProducts(page, limit, sort);
     const products = productsPaginate.docs;
     const { hasPrevPage, hasNextPage, prevPage, nextPage, page: currentPage } = productsPaginate;
-    console.log(productsPaginate);
-
+    //console.log(productsPaginate);
     if (!products) {
         return res.render('404');
     }
@@ -42,15 +41,13 @@ const renderProducts = async (req, res) => {
 };
 
 const renderRealTimeProducts = async (req, res) => {
-
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 4;
     const sort = req.query.sort || "asc";
     const productsPaginate = await productsService.getProducts(page, limit, sort);
     const products = productsPaginate.docs;
     const { hasPrevPage, hasNextPage, prevPage, nextPage, page: currentPage } = productsPaginate;
-    console.log(productsPaginate);
-
+    //console.log(productsPaginate);
     res.render("RealTimeProducts", {
         products,
         page: currentPage,
@@ -65,19 +62,14 @@ const renderProductDetail = async (req, res) => {
   try {
     const product = await productsService.getProductById(req.params.pid);
     const cart = await cartsService.getCartById(req.params.cid);
-    
-
     if (!product) {
       return res.status(404).send({ status: "error", error: 'Producto no encontrado' });
     }
-
     if (!cart) {
         return res.status(404).send({ status: "error", error: 'Carrito no encontrado' });
       }
-
     const cartId = cart._id;
-    console.log('cart',cart._id)
-
+    //console.log('cart',cart._id)
     res.render('ProductDetail', { product, cartId });
   } catch (error) {
     console.error('Error al obtener el detalle del producto:', error);
@@ -104,7 +96,6 @@ const renderTicket = async (req, res) => {
     const ticket = await ticketsService.getTicketBy(req.user._id);
     res.render('Ticket', { ticket});
 }
-
 
 export default {
     renderHome,

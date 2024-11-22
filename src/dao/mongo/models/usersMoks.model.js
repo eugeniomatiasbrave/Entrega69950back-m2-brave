@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const collection = "Users";
+const collection = "UsersMocks";
 const schema = new mongoose.Schema({
 
 	firstName:{
@@ -24,10 +24,9 @@ const schema = new mongoose.Schema({
 		type:String,
 		required:true
 	},
-	//agrega un cardId para relacionar con el carrito
 	cartId: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Carts'
+		type: Array,
+		default: [] // Agrega un array vacío por defecto
 	},
 	role: {
 		type:String,
@@ -35,7 +34,5 @@ const schema = new mongoose.Schema({
 	}
 });
 
-
-const userModel = mongoose.model(collection, schema);
-
-export default userModel;
+const usersMocksModel = mongoose.model(collection, schema);
+export default usersMocksModel;

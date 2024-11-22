@@ -4,7 +4,6 @@ import PresentUserDTO from '../dto/user/PresentUserDTO.js';
 import { usersService} from "../services/repositories.js";
 import AuthService from "../services/AuthService.js";
 
-
 const SECRET_KEY = config.jwt.SECRET_KEY;
 const ADMIN_USER = config.app.ADMIN_USER;
 const ADMIN_PWD = config.app.ADMIN_PWD;
@@ -12,11 +11,9 @@ const ADMIN_PWD = config.app.ADMIN_PWD;
 const register = async (req, res) => {
     try {
         const { email, password, firstName, lastName, birthDate } = req.body;
+        //console.log('body',req.body);
 
-        console.log('body',req.body);
-
-        // Validaciones de los campos
-        if (!email || !password || !firstName || !lastName || !birthDate) {
+        if (!email || !password || !firstName || !lastName || !birthDate) {  // Validaciones de los campos
             return res.status(400).send({ message: "Todos los campos son obligatorios" });
         }
 
@@ -37,8 +34,7 @@ const register = async (req, res) => {
             role,
             cartId: null
         };
-        console.log( 'new User:', newUser);
-
+        //console.log( 'new User:', newUser);
         await usersService.createUser(newUser);
         res.send("Registered");
     } catch (error) {
@@ -46,12 +42,11 @@ const register = async (req, res) => {
     }
 };
 
-
 const login = async (req,res)=>{ 
 	const sessionUser = new PresentUserDTO(req.user);
 	const token = jwt.sign(sessionUser.toObject(), SECRET_KEY ,{expiresIn:'15d'}); // convierto a sessionUser en un objeto plano
 	res.cookie('tokencito',token);
-    console.log(token);
+    //console.log(token);
     res.send({ status: "success", message: "Logged in successfully", token });  
 }
 
@@ -59,7 +54,6 @@ const current = (req,res)=>{
 	if (!req.user) {
 		return res.status(401).send({ status: "error", error: "Not logged in" });
 	}
-
 	const currentUser = new PresentUserDTO(req.user);
     res.send(currentUser.toObject()); // convierto a currentUser en un objeto plano
 }

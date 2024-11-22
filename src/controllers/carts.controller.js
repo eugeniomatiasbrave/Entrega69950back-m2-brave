@@ -1,6 +1,5 @@
 import { cartsService, productsService, ticketsService } from "../services/repositories.js";
 
-
 const getCarts = async (req,res) => {  // probada ok
   try {
     const carts = await cartsService.getCarts();
@@ -46,10 +45,9 @@ const addProductToCart = async (req, res) => {
   const { cid, pid } = req.params;
   let { quantity  } = req.body;
 
-// Si quantity no está definido o es null, establecerlo en 1
-if (!quantity) {
-  quantity = 1;
-}
+  if (!quantity) { // Si quantity no está definido o es null, establecerlo en 1
+    quantity = 1;
+  }
 
   try {
       const product = await productsService.getProductById(pid);
@@ -57,7 +55,8 @@ if (!quantity) {
           return res.status(404).send({ status: "error", error: 'Producto no encontrado' });
       }
 
-      const result = await cartsService.addProductToCart({cid,pid,quantity} );
+      await cartsService.addProductToCart({cid,pid,quantity});
+
       res.status(200).redirect('/carts');
   } catch (error) {
       console.error('Error al agregar el producto al carrito:', error);
@@ -69,7 +68,6 @@ const deleteProductCart = async (req,res) => {
   try {
     const cid = req.params.cid;
     const pid = req.params.pid;
-
     const result = await cartsService.deleteProductCart({cid, pid});
     res.send({ message: 'Producto eliminado del carrito', data: result });
   } catch (error) {
@@ -94,7 +92,6 @@ const clean = {
     res.status(500).send({ status: "error", error: 'Error al vaciar el carrito' });
   }
 };
-
 
 const updateProductQuantity = async (req, res) => {
   try {
@@ -123,7 +120,6 @@ const purchaseCart = async (req, res) => {
     }
   
   const purchaserEmail = user.email; // Obtener el correo del usuario autenticado por req.user
-  
   const cart = await cartsService.getCartById(cid);
   
     if (!cart) {
@@ -157,16 +153,9 @@ const purchaseCart = async (req, res) => {
     amount: productsToPurchase.reduce((total, item) => total + item.product.price * item.quantity, 0),
     purchaser: purchaserEmail
   };
-
   const response = await ticketsService.createTicket(ticket);
-
-  console.log('response:', response);
-
-  // Limpiar el carrito
- 
-
-
-
+  //console.log('response:', response);
+  // Limpiar el carrito falta
   res.send({
     status: "success",
     message: 'Compra realizada con éxito',
@@ -174,10 +163,8 @@ const purchaseCart = async (req, res) => {
     purchasedProducts: productsToPurchase,
     insufficientStockProducts
   });
-
 }
   
-
 export default { 
 	getCarts,
 	getCartById,

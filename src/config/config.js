@@ -9,6 +9,8 @@ program.parse();
 
 const options = program.opts();
 
+console.log(options);
+
 config({
     path: options.mode == "dev" ? './.env.dev' : options.mode === "stg" ? './.env.stg' : './.env.prod'
 });
@@ -26,5 +28,9 @@ export default {
 	// PUEDO PONER LAS VARIABLES DE JWT AQUI, secret token y cookies
 	jwt: {
         SECRET_KEY: process.env.SECRET_KEY,
-    }
+    },
+	mocks: {
+		MOCKS: process.env.PASSWORD_MOCKS,
+	},
+	
 };

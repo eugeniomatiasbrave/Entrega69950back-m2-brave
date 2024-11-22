@@ -1,6 +1,6 @@
 import { check, validationResult } from "express-validator";
 
-const validateProduct = [
+const validateCreateProduct = [
   check("title")
     .exists()
     .withMessage("Title is required")
@@ -45,4 +45,4 @@ const validateProduct = [
     }
   },
 ];
-export default validateProduct;
+export default validateCreateProduct;

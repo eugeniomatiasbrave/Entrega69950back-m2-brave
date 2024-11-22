@@ -9,6 +9,7 @@ import ViewsRouter from './routes/ViewsRouter.js';
 import SessionsRouter from './routes/SessionsRouter.js';
 import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/carts.router.js';
+import usersMocksRouter from './routes/usersMocks.router.js';
 import config from './config/config.js';
 import initializePassportConfig from './config/passport.config.js';
 import handleHttpError from './middlewares/handleError.js';
@@ -62,4 +63,5 @@ app.use('/', ViewsRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/api/sessions', SessionsRouter);
+app.use('/api/mockingtoys', usersMocksRouter);
 

@@ -3,8 +3,7 @@ import productsController from "../controllers/products.controller.js";
 import viewsController from "../controllers/views.controller.js";
 import { executePolicies } from '../middlewares/policies.js';
 import uploader from '../services/uploader.js';
-import validateProduct from '../validators/productValidator.js';
-
+import validateCreateProduct from '../validators/productValidator.js';
 
 const router = Router();
 
@@ -19,8 +18,8 @@ router.get('/:pid',
 router.post('/',
 	executePolicies(['ADMIN']),
 	uploader.array('thumbnail',3),
-	validateProduct,
-	productsController.createProduct); // ver si funciona
+	validateCreateProduct,
+	productsController.createProduct);
 
 router.delete('/:pid',
 	executePolicies(['ADMIN']),
@@ -28,7 +27,6 @@ router.delete('/:pid',
 
 router.put('/:pid',
 	executePolicies(['ADMIN']),
-	validateProduct,
 	productsController.updateProduct);
 
 router.get('/detail/:pid',
