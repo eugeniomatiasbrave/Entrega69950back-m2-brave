@@ -4,10 +4,11 @@ import { makeid } from "../utils.js";
 
 const getProducts = async (req,res) => {
     try {
-        const products = await productsService.getProducts();
-        res.sendSuccess(products, "Productos obtenidos con éxito");
+
+        throw new Error("Error generado manualmente para pruebas");
+      // const products = await productsService.getProducts();
+      // res.sendSuccess(products, "Productos obtenidos con éxito");
     } catch (error) {
-        console.error('Error al obtener los productos:', error);
        res.sendServerError(error);
     }
 };
@@ -21,7 +22,7 @@ const getProductById = async (req,res) => {
         res.sendSuccess(product, "Producto obtenido con éxito");
     } catch (error) {
         console.error('Error al obtener el producto:', error);
-        res.sendServerError(error);
+        res.sendServerError(error );
     }
 };
 

@@ -63,7 +63,7 @@ class HttpResponse {
 	BadRequest = (res,error) =>{
 		return res.status(HttpStatus.BAD_REQUEST).json({
 			status: HttpStatus.BAD_REQUEST,
-			message: error.message,
+			message: "Bad Request",
 			error: error.name,
 		});
 	};
@@ -71,7 +71,7 @@ class HttpResponse {
 	Unauthorized = (res, error) =>{
 		return res.status(HttpStatus.UNAUTHORIZED).json({
 			status: HttpStatus.UNAUTHORIZED,
-			message: error.message,
+			message: "Unauthorized",
 			error: error.name,
 		});
 	};
@@ -79,7 +79,7 @@ class HttpResponse {
 	Forbidden = (res, error) =>{
 		return res.status(HttpStatus.FORBIDDEN).json({
 			status: HttpStatus.FORBIDDEN,
-			message: error.message,
+			message: "Ocurrio un error tipo Forbidden",
 			error: error.name,
 		});
 	};
@@ -87,7 +87,7 @@ class HttpResponse {
 	NotFound = (res, error) =>{
 		return res.status(HttpStatus.NOT_FOUND).json({
 			status: HttpStatus.NOT_FOUND,
-			message: error.message,
+			message: "Ocurrio un error Not Found",
 			error: error.name,
 		});
 	};
@@ -95,7 +95,7 @@ class HttpResponse {
 	Conflict = (res, error) =>{
 		return res.status(HttpStatus.CONFLICT).json({
 			status: HttpStatus.CONFLICT,
-			message: error.message,
+			message: "Ocurrio un error de Conflict",
 			error: error.name,
 		});
 	};
@@ -103,11 +103,10 @@ class HttpResponse {
 	ServerError = (res, error) =>{
 		return res.status(HttpStatus.SERVER_ERROR).json({
 			status: HttpStatus.SERVER_ERROR,
-			message: error.message,
+			message: "Ocurrió un error en el servidor",
 			error: error.name,
 		});
 	};
-
 };
 
 const httpResponse = new HttpResponse();
