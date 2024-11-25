@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { passportCall } from "../middlewares/passportCall.js";
 import { executePolicies } from "../middlewares/policies.js";
-import handleHttpError from "../middlewares/handleError.js";
+import handlerSend from "../middlewares/handler.send.js";
 
 export default class BaseRouter {
 
@@ -18,19 +18,19 @@ export default class BaseRouter {
 
     get(path,policies,...callbacks){
         if(!policies||!Array.isArray(policies)) throw new Error('Policies required for endpoint '+path);
-        this.router.get(path, handleHttpError ,passportCall('current'),executePolicies(policies), this.applyCallbacks(callbacks));
+        this.router.get(path, handlerSend ,passportCall('current'),executePolicies(policies), this.applyCallbacks(callbacks));
     }
     post(path,policies,...callbacks){
         if(!policies||!Array.isArray(policies)) throw new Error('Policies required for endpoint '+path);
-        this.router.post(path, handleHttpError ,passportCall('current'),executePolicies(policies),this.applyCallbacks(callbacks));
+        this.router.post(path, handlerSend ,passportCall('current'),executePolicies(policies),this.applyCallbacks(callbacks));
     }
     put(path,policies,...callbacks){
         if(!policies||!Array.isArray(policies)) throw new Error('Policies required for endpoint '+path);
-        this.router.put(path, handleHttpError ,passportCall('current'),executePolicies(policies),this.applyCallbacks(callbacks));
+        this.router.put(path, handlerSend ,passportCall('current'),executePolicies(policies),this.applyCallbacks(callbacks));
     }
     delete(path,policies,...callbacks){
         if(!policies||!Array.isArray(policies)) throw new Error('Policies required for endpoint '+path);
-        this.router.delete(path, handleHttpError ,passportCall('current'),executePolicies(policies),this.applyCallbacks(callbacks));
+        this.router.delete(path, handlerSend ,passportCall('current'),executePolicies(policies),this.applyCallbacks(callbacks));
     };
    
     applyCallbacks(callbacks){

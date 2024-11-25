@@ -12,7 +12,8 @@ import cartsRouter from './routes/carts.router.js';
 import usersMocksRouter from './routes/usersMocks.router.js';
 import config from './config/config.js';
 import initializePassportConfig from './config/passport.config.js';
-import handleHttpError from './middlewares/handleError.js';
+import { handlerError } from './middlewares/handler.error.js';
+import handlerSend  from './middlewares/handler.send.js';
 
 const app = express();
 const PORT = config.app.PORT;
@@ -51,8 +52,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Middleware global para definir res.sendSuccess, res.sendBadRequest y res.sendUnauthorized
-app.use(handleHttpError);
+// Middleware global
+app.use(handlerError);
+app.use(handlerSend);
+
 
 //Passport Configuración
 initializePassportConfig();

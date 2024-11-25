@@ -3,7 +3,7 @@ import productsController from "../controllers/products.controller.js";
 import viewsController from "../controllers/views.controller.js";
 import { executePolicies } from '../middlewares/policies.js';
 import uploader from '../services/uploader.js';
-import validateCreateProduct from '../validators/productValidator.js';
+import validateCreateProduct  from '../middlewares/validators/productValidator.js';
 
 const router = Router();
 

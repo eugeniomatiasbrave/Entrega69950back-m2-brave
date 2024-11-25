@@ -1,4 +1,5 @@
 import { productsService } from "../services/repositories.js";
+import { BadRequestError } from '../middlewares/custom.error.js';
 import { makeid } from "../utils.js";
 
 const getProducts = async (req,res) => {
@@ -6,21 +7,21 @@ const getProducts = async (req,res) => {
         const products = await productsService.getProducts();
         res.sendSuccess(products, "Productos obtenidos con éxito");
     } catch (error) {
-        res.sendServerError('Error al obtener los productos');
+        console.error('Error al obtener los productos:', error);
+       res.sendServerError(error);
     }
 };
 
 const getProductById = async (req,res) => {
+    const pid = req.params.pid;
+
     try {
-        const pid = req.params.pid;
         const product = await productsService.getProductById(pid);
-        if (!product) {
-            return res.sendBadRequest('No se encontró el producto con el ID: ' + pid);
-        }
+        if (!product) throw new BadRequestError('El producto que intentas obtener no existe');      
         res.sendSuccess(product, "Producto obtenido con éxito");
     } catch (error) {
         console.error('Error al obtener el producto:', error);
-        res.sendServerError('Error al obtener el producto');
+        res.sendServerError(error);
     }
 };
 
@@ -42,13 +43,13 @@ const createProduct = async (req,res) => {
             newProduct.thumbnails.push({ maintype: req.files[i].mimetype, path: `/files/products/${req.files[i].filename}`, main: i == 0 });
         }
         const result = await productsService.createProduct(newProduct);
-        if (!result) {
-            return res.sendBadRequest('Error al crear el producto');
-        }
+
+        if (!result) throw new BadRequestError('Error al crear el producto');
+        
         res.sendSuccess(result, "Producto creado con éxito"); // data: result es el producto creado.
     } catch (error) {
         console.log(error);
-        res.sendServerError('Error al crear el producto');
+        res.sendServerError(error);
     }
 };
 
