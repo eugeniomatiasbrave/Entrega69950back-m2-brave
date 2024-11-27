@@ -1,40 +1,21 @@
-import { Router } from "express";
+import BaseRouter from "./BaseRouter.js";
 import productsController from "../controllers/products.controller.js";
 import viewsController from "../controllers/views.controller.js";
 import { executePolicies } from '../middlewares/policies.js';
 import uploader from '../services/uploader.js';
-import validateCreateProduct  from '../middlewares/validators/productValidator.js';
+import validateCreateProduct from '../middlewares/validators/productValidator.js';
 
-const router = Router();
+class ProductsRouter extends BaseRouter {
+    init() {
+        this.get('/', ['PUBLIC'], executePolicies(['PUBLIC']), productsController.getProducts);
+        this.get('/:pid', ['PUBLIC'], executePolicies(['PUBLIC']), productsController.getProductById);
+        this.post('/', ['ADMIN'], executePolicies(['ADMIN']), uploader.array('thumbnail', 3), validateCreateProduct, productsController.createProduct);
+        this.delete('/:pid', ['ADMIN'], executePolicies(['ADMIN']), productsController.deleteProduct);
+        this.put('/:pid', ['ADMIN'], executePolicies(['ADMIN']), productsController.updateProduct);
+        this.get('/detail/:pid', ['PUBLIC', 'USER'], executePolicies(['PUBLIC', 'USER']), viewsController.renderProductDetail);
+        this.get('/unauthorized', ['PUBLIC'], executePolicies(['PUBLIC']), viewsController.renderUnauthorized);
+    }
+}
 
-router.get('/',
-	executePolicies(['PUBLIC']),
-	productsController.getProducts);
-
-router.get('/:pid',
-	executePolicies(['PUBLIC']),
-	productsController.getProductById);
-
-router.post('/',
-	executePolicies(['ADMIN']),
-	uploader.array('thumbnail',3),
-	validateCreateProduct,
-	productsController.createProduct);
-
-router.delete('/:pid',
-	executePolicies(['ADMIN']),
-	productsController.deleteProduct);
-
-router.put('/:pid',
-	executePolicies(['ADMIN']),
-	productsController.updateProduct);
-
-router.get('/detail/:pid',
-	executePolicies(['PUBLIC','USER']),
-	viewsController.renderProductDetail);
-
-router.get('/unauthorized',
-	executePolicies(['PUBLIC']),
-	viewsController.renderUnauthorized);
-
-export default router;
+const productsRouter = new ProductsRouter();
+export default productsRouter.getRouter();

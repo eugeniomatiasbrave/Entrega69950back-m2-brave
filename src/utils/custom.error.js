@@ -40,3 +40,10 @@ export class ServerError extends Error {
         this.name = "Server Error";
     }
 }
+
+export class DatabaseConnectionError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = "Database Connection Error";
+    }
+}

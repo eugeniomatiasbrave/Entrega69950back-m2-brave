@@ -1,4 +1,4 @@
-import { NotFoundError, UnhautorizedError, ForbiddenError, ConflictError, BadRequestError, ServerError } from "./custom.error.js";
+import { NotFoundError, UnhautorizedError, ForbiddenError, ConflictError, BadRequestError, ServerError } from "../utils/custom.error.js";
 
 export const handlerError = ( error, req, res, next ) => {
     if (error instanceof UnhautorizedError) return res.sendUnauthorized(error);
@@ -7,5 +7,6 @@ export const handlerError = ( error, req, res, next ) => {
     if (error instanceof ConflictError) return res.sendConflict(error);
     if (error instanceof BadRequestError) return res.sendBadRequest(error);
     if (error instanceof ServerError) return res.sendServerError(error);
-    
+    if (error instanceof DatabaseConnectionError) return res.send({ message: error.message });
+
 };

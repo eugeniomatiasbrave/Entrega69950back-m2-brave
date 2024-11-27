@@ -1,17 +1,20 @@
-import { Router } from "express";
+import BaseRouter from "./BaseRouter.js";
 import cartsController from "../controllers/carts.controller.js";
 import { executePolicies } from '../middlewares/policies.js';
-import { passportCall } from '../middlewares/passportCall.js';//con current traigo el usuario logueado
+import { passportCall } from '../middlewares/passportCall.js';
 
-const router = Router();
+class CartsRouter extends BaseRouter {
+    init() {
+        this.get('/', ['USER'], executePolicies(['USER']), cartsController.getCarts);
+        this.get('/:cid', ['USER'], executePolicies(['USER']), cartsController.getCartById);
+        this.post('/', ['PUBLIC'], cartsController.createCart);
+        this.post('/:cid/product/:pid', ['PUBLIC'], cartsController.addProductToCart);
+        this.delete('/:cid/products/:pid', ['PUBLIC'], cartsController.deleteProductCart);
+        this.put('/:cid/products', ['PUBLIC'], cartsController.cleanToCart);
+        this.put('/:cid/products/:pid', ['PUBLIC'], cartsController.updateProductQuantity);
+        this.post('/:cid/purchase', ['USER'], passportCall('current'), cartsController.purchaseCart);
+    }
+}
 
-router.get('/', executePolicies(['USER']), cartsController.getCarts); // probada ok
-router.get('/:cid', executePolicies(['USER']), cartsController.getCartById); // muestro el carrito del usuario
-router.post('/', cartsController.createCart);
-router.post('/:cid/product/:pid', cartsController.addProductToCart); 
-router.delete('/:cid/products/:pid', cartsController.deleteProductCart);
-router.put('/:cid/products', cartsController.cleanToCart)
-router.put('/:cid/products/:pid', cartsController.updateProductQuantity);
-router.post('/:cid/purchase', passportCall('current'),cartsController.purchaseCart); // permite finalizar el proceso de compra de dicho carrito.
-
-export default router;
+const cartsRouter = new CartsRouter();
+export default cartsRouter.getRouter();

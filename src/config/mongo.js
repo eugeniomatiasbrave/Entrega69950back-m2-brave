@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
 import config from './config.js';
+import { DatabaseConnectionError } from '../utils/custom.error.js';
 
 const dbConnect = async () => {
   try {
     await mongoose.connect(config.mongo.URL);
-    console.log(`**** CONEXION A MONGO CORRECTA ****`);
   } catch (err) {
-    console.log(`**** ERROR DE CONEXION A MONGO ****`, err);
+    throw new DatabaseConnectionError('Error de conexión a la base de datos');
   }
 };
 

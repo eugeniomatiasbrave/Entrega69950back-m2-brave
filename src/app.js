@@ -4,7 +4,8 @@ import Handlebars from 'handlebars';
 import exphbs from 'express-handlebars';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
-import __dirname from './utils.js';
+import morgan from 'morgan';
+import __dirname from './utils/utils.js';
 import ViewsRouter from './routes/ViewsRouter.js';
 import SessionsRouter from './routes/SessionsRouter.js';
 import productsRouter from './routes/products.router.js';
@@ -51,6 +52,9 @@ app.use(express.static(`${__dirname}/public`));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+// Configura morgan para registrar las solicitudes HTTP
+app.use(morgan('dev'));
 
 // Middleware global
 app.use(handlerError);

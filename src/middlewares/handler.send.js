@@ -1,4 +1,4 @@
-import httpResponse from './http.response.js';
+import httpResponse from '../utils/http.response.js';
 
 const handlerSend = (req, res, next) => {
     res.sendSuccess = (data) => httpResponse.Success(res, data);

@@ -1,18 +1,20 @@
 import { productsService } from "../services/repositories.js";
-import { BadRequestError } from '../middlewares/custom.error.js';
-import { makeid } from "../utils.js";
+import { BadRequestError } from '../utils/custom.error.js';
+import { makeid } from "../utils/utils.js";
+import logger from '../../logs/app.logs.js';
 
 const getProducts = async (req,res) => {
     try {
-
-        throw new Error("Error generado manualmente para pruebas");
-      // const products = await productsService.getProducts();
-      // res.sendSuccess(products, "Productos obtenidos con éxito");
+      const products = await productsService.getProducts();
+         logger.info("Productos obtenidos con éxito"); // uso de logger
+      res.sendSuccess(products,"Productos obtenidos con éxito"); // error revisado
     } catch (error) {
-       res.sendServerError(error);
+         logger.error("Error al obtener los productos");
+      res.sendServerError(error); // error revisado
     }
 };
 
+//resto meddlewere de errores no revisados
 const getProductById = async (req,res) => {
     const pid = req.params.pid;
 
