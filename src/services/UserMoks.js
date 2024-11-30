@@ -1,4 +1,4 @@
-import usersMocksModel from "../dao/mongo/models/UsersMoks.model.js";
+import usersMocksModel from "../dao/mongo/models/usersMoks.model.js";
 import { generateUser } from "../utils/user.utils.js";
 
 const createUsersMock = async (cant = 50) => {

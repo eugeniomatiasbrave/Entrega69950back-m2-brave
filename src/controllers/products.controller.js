@@ -1,6 +1,6 @@
 import { productsService } from "../services/repositories.js";
 import { BadRequestError } from '../utils/custom.error.js';
-import { makeid } from "../utils/utils.js";
+import { makeid } from "../utils.js";
 import logger from '../../logs/app.logs.js';
 
 const getProducts = async (req,res) => {

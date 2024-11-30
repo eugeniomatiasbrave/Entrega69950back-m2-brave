@@ -1,0 +1,15 @@
+
+Artillery:
+  artillery quick --count 40 --num 50 "http://localhost:8080/register" -o registerUsers.json
+  artillery run test.yml --output test-products.json
+  artillery report test-products.json -o test-products.html
+
+Docker:
+  //creacion de una imagen de la app
+  docker build -t <nombre de la imagen> . //nombre en minuscula // ojo espacio punto es a drede
+  docker build -t ecommerce-toys .
+  // creacion de un contenedor
+  docker run -p <puerto local : puerto del servidor> <nombre de la imagen . />//el punto otra vez
+  docker run -p 9000:8080 ecommerce-toys
+  // docker en uso local
+  docker run -d -p 8080:8080 --name ecommerce-toys-container ecommerce-toys   //estidiar en si fuera en no local (localhost)
