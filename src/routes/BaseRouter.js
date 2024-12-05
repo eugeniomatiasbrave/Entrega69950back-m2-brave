@@ -35,7 +35,9 @@ export default class BaseRouter {
    
     applyCallbacks(callbacks){
         return callbacks.map((callback)=>async(...params)=>{
-            //Esta función, dentro ya tiene los params req,res,next
+            if (typeof callback !== 'function') {
+                throw new TypeError(`Callback is not a function: ${callback}`);
+            }
             try{
                 await callback.apply(this,params);
             }catch(error){

@@ -1,0 +1,78 @@
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "Autenticación basada en JWT"
+  schemas:
+    BodyRegistroProduct:
+      type: object
+      required:
+        - title
+        - description
+        - price
+        - code
+        - status
+        - stock
+        - category
+        - slug
+        - thumbnails
+      properties:
+        title:
+          type: string
+          description: The title of the product
+          example: "Pelotas de futbol"
+        description:
+          type: string
+          description: The description of the product
+          example: "This is the description of the product"
+        price:
+          type: number
+          description: The price of the product
+          example: 10000
+        code:
+          type: string
+          description: The code of the product
+          example: "abc858"
+        status:
+          type: boolean
+          description: The status of the product
+          example: true
+        stock:
+          type: number
+          description: The stock of the product
+          example: 50
+        category:
+          type: string
+          description: The category of the product
+          example: "Niños"
+        slug:
+          type: string
+          description: The slug of the product
+          example: "pelotas_de_futbol_1234"
+        thumbnails:
+          type: array
+          items:
+            type: object
+            properties:
+              maintype:
+                type: string
+                description: The MIME type of the thumbnail
+                example: "image/png"
+              path:
+                type: string
+                description: The path to the thumbnail
+                example: "/files/products/1719601132176-autoCasafantasmas.png"
+              main:
+                type: boolean
+                description: Indicates if this is the main thumbnail
+                example: true
+          description: URLs de las imágenes del producto
+          example: 
+            - maintype: "image/png"
+              path: "/files/products/1719601132176-autoCasafantasmas.png"
+              main: true
+            - maintype: "image/jpeg"
+              path: "/files/products/1719601132177-autoCasafantasmas.jpg"
+              main: false

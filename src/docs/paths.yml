@@ -1,0 +1,375 @@
+paths:
+  /api/sessions/login:
+    post:
+      tags:
+      - Sessions
+      summary: Iniciar sesión
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: admin@example.com
+                password:
+                  type: string
+                  example: password123
+        required: true
+      responses:
+        200:
+          description: Inicio de sesión exitoso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        401:
+          description: Credenciales incorrectas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: Incorrect credentials
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: Error al iniciar sesión
+  /api/products:
+    post:
+      tags:
+      - Products
+      summary: Registro del product en base de datos.
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BodyRegistroProduct'
+        required: true   
+      responses:
+        200:
+          description: Se registra del product correctamente.
+          content:
+            application/json:
+              schema:     
+                $ref: '#/components/schemas/Products/RespuestaRegistroProduct'
+        500:
+          description: Error del servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products/InternalServerError'                 
+    get:
+      tags:
+      - Products
+      summary: Lista de products.
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Lista de products.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products/RespuestaGetProducts'
+        500:
+          description: Error del servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products/InternalServerError'
+  /api/products/{pid}:
+    get:
+      tags:
+        - Products
+      summary: Obtener un product por id.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          description: Id del product.
+          schema:
+            type: string
+      responses:
+        200:
+          description: Se obtiene el product correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products/RespuestaRegistroProduct'
+        404:
+          description: No se encuentra el product.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products/RespuestaErrorGetById'
+        500: 
+          description: Error del servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products/InternalServerError'
+    put:
+      tags:
+        - Products
+      summary: Actualizar un product por id.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          description: Id del product.
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BodyRegistroProduct'
+        required: true
+      responses:
+        200:
+          description: Se actualiza el product correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products/RespuestaRegistroProduct'
+        404:
+          description: No se encuentra el product.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products/RespuestaErrorGetById'
+        500:
+          description: Error del servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products/InternalServerError'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "Autenticación basada en JWT"
+  schemas:
+    BodyRegistroProduct:
+      type: object
+      required:
+        - title
+        - description
+        - price
+        - code
+        - status
+        - stock
+        - category
+        - slug
+        - thumbnails
+      properties:
+        title:
+          type: string
+          description: The title of the product
+          example: "Pelotas de futbol"
+        description:
+          type: string
+          description: The description of the product
+          example: "This is the description of the product"
+        price:
+          type: number
+          description: The price of the product
+          example: 10000
+        code:
+          type: string
+          description: The code of the product
+          example: "abc858"
+        status:
+          type: boolean
+          description: The status of the product
+          example: true
+        stock:
+          type: number
+          description: The stock of the product
+          example: 50
+        category:
+          type: string
+          description: The category of the product
+          example: "Niños"
+        slug:
+          type: string
+          description: The slug of the product
+          example: "pelotas_de_futbol_1234"
+        thumbnails:
+          type: array
+          items:
+            type: object
+            properties:
+              maintype:
+                type: string
+                description: The MIME type of the thumbnail
+                example: "image/png"
+              path:
+                type: string
+                description: The path to the thumbnail
+                example: "/files/products/1719601132176-autoCasafantasmas.png"
+              main:
+                type: boolean
+                description: Indicates if this is the main thumbnail
+                example: true
+          description: URLs de las imágenes del producto
+          example: 
+            - maintype: "image/png"
+              path: "/files/products/1719601132176-autoCasafantasmas.png"
+              main: true
+            - maintype: "image/jpeg"
+              path: "/files/products/1719601132177-autoCasafantasmas.jpg"
+              main: false
+    Products:
+      RespuestaRegistroProduct:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: Id del producto.
+          title:
+            type: string
+            description: Título del producto.
+          description:
+            type: string
+            description: Descripción del producto.
+          price:
+            type: number
+            description: Precio del producto.
+          code:
+            type: string
+            description: Código del producto.
+          status:
+            type: boolean
+            description: Estado del producto.
+          stock:
+            type: number
+            description: Stock del producto.
+          category:
+            type: string
+            description: Categoría del producto.
+          thumbnails:
+            type: array
+            items:
+              type: object
+              properties:
+                maintype:
+                  type: string
+                  description: The MIME type of the thumbnail
+                  example: "image/png"
+                path:
+                  type: string
+                  description: The path to the thumbnail
+                  example: "/files/products/1719601132176-autoCasafantasmas.png"
+                main:
+                  type: boolean
+                  description: Indicates if this is the main thumbnail
+                  example: true
+            description: URLs de las imágenes del producto.
+        example:
+          _id: "60d21b4667d0d8992e610c85"
+          title: "Auto casafantasmas"
+          description: "Oferta"
+          price: 30000
+          code: "abc020"
+          status: true
+          stock: 90
+          category: "Niño"
+          thumbnails: 
+            - maintype: "image/png"
+              path: "/files/products/1719601132176-autoCasafantasmas.png"
+              main: true
+            - maintype: "image/jpeg"
+              path: "/files/products/1719601132177-autoCasafantasmas.jpg"
+              main: false
+      RespuestaGetProducts:
+        type: array
+        items: 
+          properties:
+            _id:
+              type: string
+              description: Id del producto.
+            title:
+              type: string
+              description: Título del producto.
+            description:
+              type: string
+              description: Descripción del producto.
+            price:
+              type: number
+              description: Precio del producto.
+            code:
+              type: string
+              description: Código del producto.
+            status:
+              type: boolean
+              description: Estado del producto.
+            stock:
+              type: number
+              description: Stock del producto.
+            category:
+              type: string
+              description: Categoría del producto.
+            thumbnails:
+              type: array
+              items:
+                type: object
+                properties:
+                  maintype:
+                    type: string
+                    description: The MIME type of the thumbnail
+                    example: "image/png"
+                  path:
+                    type: string
+                    description: The path to the thumbnail
+                    example: "/files/products/1719601132176-autoCasafantasmas.png"
+                  main:
+                    type: boolean
+                    description: Indicates if this is the main thumbnail
+                    example: true
+              description: URLs de las imágenes del producto.
+          example:
+            - _id: "60d21b4667d0d8992e610c85"
+              title: "Auto casafantasmas"
+              description: "Oferta"
+              price: 30000
+              code: "abc020"
+              status: true
+              stock: 90
+              category: "Niño"
+              thumbnails: 
+                - maintype: "image/png"
+                  path: "/files/products/1719601132176-autoCasafantasmas.png"
+                  main: true
+                - maintype: "image/jpeg"
+                  path: "/files/products/1719601132177-autoCasafantasmas.jpg"
+                  main: false

@@ -1,23 +1,37 @@
 import express from "express";
+import helmet from "helmet";
 import dbConnect from "./config/mongo.js";
 import Handlebars from "handlebars";
 import exphbs from "express-handlebars";
 import passport from "passport";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
+import cors from 'cors';
 import __dirname from "./utils.js";
 import ViewsRouter from "./routes/ViewsRouter.js";
 import SessionsRouter from "./routes/SessionsRouter.js";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
 import usersMocksRouter from "./routes/usersMocks.router.js";
+import swaggerUI from "swagger-ui-express";
+import swaggerJSDoc from "swagger-jsdoc";
 import config from "./config/config.js";
 import initializePassportConfig from "./config/passport.config.js";
 import { handlerError } from "./middlewares/handler.error.js";
 import handlerSend from "./middlewares/handler.send.js";
+import { info } from "./docs/info.js";
 
   const app = express();
+  app.use(cors());
+
+  // Swagger Configuration
+  const specs = swaggerJSDoc(info);
+  app.use("/docs", swaggerUI.serve, swaggerUI.setup(specs));
+
   const PORT = config.app.PORT;
+
+  app.use(helmet()); // Usar helmet para mejorar la seguridad
+  
   app.listen(PORT, () =>
     console.log(
       `****SERVER RUNNING ON PORT ${PORT} **** - ` + new Date().toLocaleString()
@@ -46,6 +60,7 @@ import handlerSend from "./middlewares/handler.send.js";
     },
   });
 
+  
   app.engine("handlebars", handlebars.engine);
   app.set("view engine", "handlebars");
   app.set("views", `${__dirname}/views`);

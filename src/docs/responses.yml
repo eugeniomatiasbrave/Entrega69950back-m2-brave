@@ -1,0 +1,147 @@
+components:
+  schemas:
+    Products:
+      RespuestaRegistroProduct:
+        type: object
+        properties:
+          _id:
+            type: string
+            description: Id del producto.
+          title:
+            type: string
+            description: Título del producto.
+          description:
+            type: string
+            description: Descripción del producto.
+          price:
+            type: number
+            description: Precio del producto.
+          code:
+            type: string
+            description: Código del producto.
+          status:
+            type: boolean
+            description: Estado del producto.
+          stock:
+            type: number
+            description: Stock del producto.
+          category:
+            type: string
+            description: Categoría del producto.
+          thumbnails:
+            type: array
+            items:
+              type: object
+              properties:
+                maintype:
+                  type: string
+                  description: The MIME type of the thumbnail
+                  example: "image/png"
+                path:
+                  type: string
+                  description: The path to the thumbnail
+                  example: "/files/products/1719601132176-autoCasafantasmas.png"
+                main:
+                  type: boolean
+                  description: Indicates if this is the main thumbnail
+                  example: true
+            description: URLs de las imágenes del producto.
+        example:
+          _id: "60d21b4667d0d8992e610c85"
+          title: "Auto casafantasmas"
+          description: "Oferta"
+          price: 30000
+          code: "abc020"
+          status: true
+          stock: 90
+          category: "Niño"
+          thumbnails: 
+            - maintype: "image/png"
+              path: "/files/products/1719601132176-autoCasafantasmas.png"
+              main: true
+      RespuestaGetProducts:
+        type: array
+        items: 
+          properties:
+            _id:
+              type: string
+              description: Id del producto.
+            title:
+              type: string
+              description: Título del producto.
+            description:
+              type: string
+              description: Descripción del producto.
+            price:
+              type: number
+              description: Precio del producto.
+            code:
+              type: string
+              description: Código del producto.
+            status:
+              type: boolean
+              description: Estado del producto.
+            stock:
+              type: number
+              description: Stock del producto.
+            category:
+              type: string
+              description: Categoría del producto.
+            thumbnails:
+              type: array
+              items:
+                type: object
+                properties:
+                  maintype:
+                    type: string
+                    description: The MIME type of the thumbnail
+                    example: "image/png"
+                  path:
+                    type: string
+                    description: The path to the thumbnail
+                    example: "/files/products/1719601132176-autoCasafantasmas.png"
+                  main:
+                    type: boolean
+                    description: Indicates if this is the main thumbnail
+                    example: true
+              description: URLs de las imágenes del producto.
+          example:
+            - _id: "60d21b4667d0d8992e610c85"
+              title: "Auto casafantasmas"
+              description: "Oferta"
+              price: 30000
+              code: "abc020"
+              status: true
+              stock: 90
+              category: "Niño"
+              thumbnails: 
+                - maintype: "image/png"
+                  path: "/files/products/1719601132176-autoCasafantasmas.png"
+                  main: true
+                - maintype: "image/jpeg"
+                  path: "/files/products/1719601132177-autoCasafantasmas.jpg"
+                  main: false
+      RespuestaErrorGetById:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Mensaje de error.
+          error:
+            type: string
+            description: Error.
+        example:
+          message: "No se encontró el producto"
+          error: "Producto no encontrado"
+      InternalServerError:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Mensaje de error.
+          error:
+            type: string
+            description: Error.
+        example:
+          message: "Error interno"
+          error: "Error interno del servidor"
