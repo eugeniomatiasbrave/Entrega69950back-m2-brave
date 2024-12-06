@@ -8,7 +8,9 @@
     "dev": "nodemon src/app.js -m dev",
     "start": "node src/app.js -m prod",
     "qa": "node src/app.js -m stg",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:chai": "mocha ./src/test/productDAO.chai.test.js",
+    "test:assert": "mocha ./src/test/productDAO.assert.test.js",
+    "test:node": "node ./src/test/productDAO.node.test.js"
   },
   "keywords": [],
   "author": "",
@@ -43,5 +45,9 @@
   },
   "engines": {
     "node": "20.18.0"
+  },
+  "devDependencies": {
+    "chai": "^5.1.2",
+    "mocha": "^11.0.1"
   }
 }

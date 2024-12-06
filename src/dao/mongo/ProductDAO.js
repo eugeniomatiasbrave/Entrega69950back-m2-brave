@@ -10,34 +10,33 @@ export default class ProductDAO {
         return filter;
     }
    
-    get (page, limit, sort, maxPrice, category, stock) {
+   async get (page, limit, sort, maxPrice, category, stock) {
         const filter = this.buildFilter({ maxPrice, category, stock });
         const options = { limit, page, lean: true };
         if (sort === 'asc' || sort === 'desc') {
             options.sort = { price: sort };
         }
-        return productModel.paginate(filter, options);
+        return await productModel.paginate(filter, options);
     }
    
-    getViews () {
-        return productModel.find({}).lean();
+    async getViews () {
+        return await productModel.find({}).lean();
     };
     
-    getBy(id) {
-        return productModel.findById(id); 
+    async getBy(id) {
+        return await productModel.findById(id); 
     }
     
-    create (product){ // Crea uno nuevo
-        return productModel.create(product);
+    async create (product){ // Crea uno nuevo
+        return await productModel.create(product);
     };
     
-    update (pid, updateData){ // edita uno
-        return productModel.updateOne({ _id: String(pid) }, { $set: updateData });
+    async update (pid, updateData){ // edita uno
+        return await productModel.updateOne({ _id: String(pid) }, { $set: updateData });
     };
     
-    delete (pid){ // elimina uno
-        return productModel.deleteOne({_id: pid});
+    async delete (pid){ // elimina uno
+        return await productModel.deleteOne({_id: pid});
     };	
-    
 };
 

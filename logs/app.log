@@ -1,3 +1,48 @@
 [2024-11-27T16:12:42.488] [INFO] default - Productos obtenidos con éxito
 [2024-12-04T18:05:57.625] [INFO] default - Productos obtenidos con éxito
 [2024-12-05T11:16:54.586] [INFO] default - Productos obtenidos con éxito
+[2024-12-05T21:50:15.020] [INFO] prod - Se limpió la colección de productos
+[2024-12-05T21:50:15.146] [INFO] prod - Se limpió la colección de productos
+[2024-12-05T21:55:56.663] [INFO] prod - Se limpió la colección de productos
+[2024-12-05T21:55:56.693] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T06:38:15.932] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T06:38:15.950] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T07:39:18.362] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T07:39:18.378] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T07:44:23.795] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T07:44:23.811] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T09:44:26.767] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T09:44:26.781] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T09:51:29.906] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T09:51:29.920] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T10:02:40.449] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T10:02:40.463] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T10:03:43.560] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T10:03:43.575] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T10:04:19.700] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T10:04:19.714] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T10:06:05.683] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T10:06:05.697] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T10:07:12.085] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T10:07:12.101] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T10:08:07.758] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T10:08:07.772] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T10:12:23.778] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T10:12:23.792] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T10:13:27.415] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T10:13:27.430] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T10:16:41.543] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T10:16:41.559] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T10:18:34.128] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T10:18:34.143] [INFO] prod - Se limpió la colección de productos
+[2024-12-06T10:18:34.145] [INFO] prod - {
+  title: 'Licensed Wooden Towels',
+  description: 'New Sausages model with 70 GB RAM, 206 GB storage, and brilliant features',
+  code: 197,
+  price: '137.55',
+  category: 'Outdoors',
+  stock: 86,
+  status: true,
+  slug: 'vomica-defungo-admitto',
+  thumbnails: []
+}

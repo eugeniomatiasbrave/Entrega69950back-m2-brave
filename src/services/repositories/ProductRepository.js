@@ -4,27 +4,27 @@ export default class ProductRepository {
 		this.dao = dao;	
     };
 
-	getProducts(page, limit, sort, maxPrice, category, stock) {
-         return this.dao.get(page, limit, sort, maxPrice, category, stock);  
+	async getProducts(page, limit, sort, maxPrice, category, stock) {
+         return await this.dao.get(page, limit, sort, maxPrice, category, stock);  
     };
     
-    getProductsViews() {
-        return this.dao.getViews();
+    async getProductsViews() {
+        return await this.dao.getViews();
     };
     
-    getProductById(pid) { // Busca solo uno
-        return this.dao.getBy(pid); 
+    async getProductById(pid) { // Busca solo uno
+        return await this.dao.getBy(pid); 
     };
     
-    createProduct(product){ // Crea uno nuevo
-        return this.dao.create(product);
+    async createProduct(product){ // Crea uno nuevo
+        return await this.dao.create(product);
     };
     
-    updateProduct(pid,updateData){ // edita uno
-        return this.dao.update(pid,updateData);
+    async updateProduct(pid,updateData){ // edita uno
+        return await this.dao.update(pid,updateData);
     };
     
-    deleteProduct(pid){ // elimina uno
-        return this.dao.delete(pid);
+    async deleteProduct(pid){ // elimina uno
+        return await this.dao.delete(pid);
     };	
 };
