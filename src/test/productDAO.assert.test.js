@@ -1,6 +1,6 @@
+import mongoose from 'mongoose';
 import ProductDAO from '../dao/mongo/ProductDAO.js';
 import assert from 'node:assert';
-import mongoose from 'mongoose';
 import logger from '../../logs/app.logs.js';
 
 describe('Tests unitarios de ProductDAO', () => {

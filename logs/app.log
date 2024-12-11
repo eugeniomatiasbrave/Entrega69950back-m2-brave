@@ -46,3 +46,31 @@
   slug: 'vomica-defungo-admitto',
   thumbnails: []
 }
+[2024-12-09T13:55:35.804] [INFO] prod - Se limpió la colección de productos
+[2024-12-09T15:41:05.305] [INFO] prod - Se limpió la colección de productos
+[2024-12-09T15:52:23.469] [INFO] prod - Se limpió la colección de productos
+[2024-12-09T15:56:30.703] [INFO] prod - Se limpió la colección de productos
+[2024-12-09T15:58:06.221] [INFO] prod - Se limpió la colección de productos
+[2024-12-09T16:33:14.339] [INFO] prod - Se limpió la colección de productos
+[2024-12-09T16:34:28.220] [INFO] prod - Se limpió la colección de productos
+[2024-12-09T16:37:15.942] [INFO] prod - Se limpió la colección de productos
+[2024-12-09T16:40:28.570] [INFO] prod - Se limpió la colección de productos
+[2024-12-09T16:44:55.925] [INFO] prod - Se limpió la colección de productos
+[2024-12-11T09:25:44.382] [INFO] test - Se limpió la colección de productos
+[2024-12-11T09:32:30.627] [INFO] test - Se limpió la colección de productos
+[2024-12-11T09:35:05.881] [INFO] test - Se limpió la colección de productos
+[2024-12-11T15:34:16.174] [INFO] prod - Se limpió la colección de productos
+[2024-12-11T15:34:16.184] [INFO] prod - Se limpió la colección de productos
+[2024-12-11T15:37:04.939] [INFO] prod - {
+  title: 'Modern Steel Soap',
+  description: 'New mint green Shirt with ergonomic design for hasty comfort',
+  code: 930,
+  price: '198.90',
+  category: 'Books',
+  stock: 22,
+  status: true,
+  slug: 'laborum-decet-terga',
+  thumbnails: []
+}
+[2024-12-11T15:37:54.753] [INFO] prod - Se limpió la colección de productos
+[2024-12-11T15:37:54.766] [INFO] prod - Se limpió la colección de productos
