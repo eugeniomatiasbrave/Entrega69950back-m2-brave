@@ -28,11 +28,11 @@ import { info } from "./docs/info.js";
   const specs = swaggerJSDoc(info);
   app.use("/docs", swaggerUI.serve, swaggerUI.setup(specs));
 
-  const PORT = config.app.PORT;
+  const PORT = config.app.PORT || 8083;
 
   app.use(helmet()); // Usar helmet para mejorar la seguridad
   
-  app.listen(PORT, () =>
+  const server = app.listen(PORT, () =>
     console.log(
       `****SERVER RUNNING ON PORT ${PORT} **** - ` + new Date().toLocaleString()
     )
@@ -84,4 +84,6 @@ import { info } from "./docs/info.js";
   // Middleware de errores
   app.use(handlerError);
   app.use(handlerSend);
+
+  export { app, server };
   

@@ -10,7 +10,9 @@
     "qa": "node src/app.js -m stg",
     "test:chai": "mocha ./src/test/productDAO.chai.test.js",
     "test:assert": "mocha ./src/test/productDAO.assert.test.js",
-    "test:node": "node ./src/test/productDAO.node.test.js"
+    "test:node": "node ./src/test/productDAO.node.test.js",
+    "test-original": "node --experimental-vm-modules node_modules/.bin/jest",
+    "test:int": "cross-env NODE_OPTIONS=--experimental-vm-modules jest src/test/api/app.test.js "
   },
   "keywords": [],
   "author": "",
@@ -48,6 +50,7 @@
   },
   "devDependencies": {
     "chai": "^5.1.2",
+    "cross-env": "^7.0.3",
     "jest": "^29.7.0",
     "mocha": "^11.0.1",
     "supertest": "^7.0.0"

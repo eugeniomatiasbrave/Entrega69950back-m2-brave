@@ -1,76 +1,404 @@
-[2024-11-27T16:12:42.488] [INFO] default - Productos obtenidos con éxito
-[2024-12-04T18:05:57.625] [INFO] default - Productos obtenidos con éxito
-[2024-12-05T11:16:54.586] [INFO] default - Productos obtenidos con éxito
-[2024-12-05T21:50:15.020] [INFO] prod - Se limpió la colección de productos
-[2024-12-05T21:50:15.146] [INFO] prod - Se limpió la colección de productos
-[2024-12-05T21:55:56.663] [INFO] prod - Se limpió la colección de productos
-[2024-12-05T21:55:56.693] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T06:38:15.932] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T06:38:15.950] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T07:39:18.362] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T07:39:18.378] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T07:44:23.795] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T07:44:23.811] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T09:44:26.767] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T09:44:26.781] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T09:51:29.906] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T09:51:29.920] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T10:02:40.449] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T10:02:40.463] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T10:03:43.560] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T10:03:43.575] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T10:04:19.700] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T10:04:19.714] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T10:06:05.683] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T10:06:05.697] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T10:07:12.085] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T10:07:12.101] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T10:08:07.758] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T10:08:07.772] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T10:12:23.778] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T10:12:23.792] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T10:13:27.415] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T10:13:27.430] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T10:16:41.543] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T10:16:41.559] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T10:18:34.128] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T10:18:34.143] [INFO] prod - Se limpió la colección de productos
-[2024-12-06T10:18:34.145] [INFO] prod - {
-  title: 'Licensed Wooden Towels',
-  description: 'New Sausages model with 70 GB RAM, 206 GB storage, and brilliant features',
-  code: 197,
-  price: '137.55',
-  category: 'Outdoors',
-  stock: 86,
+[2024-12-12T10:36:53.175] [INFO] prod - {
+  title: 'Bespoke Plastic Keyboard',
+  description: 'Savor the fluffy essence in our Chips, designed for firsthand culinary adventures',
+  code: 780,
+  price: '252.50',
+  category: 'Jewelry',
+  stock: 44,
   status: true,
-  slug: 'vomica-defungo-admitto',
+  slug: 'consequatur-cerno-agnosco',
   thumbnails: []
 }
-[2024-12-09T13:55:35.804] [INFO] prod - Se limpió la colección de productos
-[2024-12-09T15:41:05.305] [INFO] prod - Se limpió la colección de productos
-[2024-12-09T15:52:23.469] [INFO] prod - Se limpió la colección de productos
-[2024-12-09T15:56:30.703] [INFO] prod - Se limpió la colección de productos
-[2024-12-09T15:58:06.221] [INFO] prod - Se limpió la colección de productos
-[2024-12-09T16:33:14.339] [INFO] prod - Se limpió la colección de productos
-[2024-12-09T16:34:28.220] [INFO] prod - Se limpió la colección de productos
-[2024-12-09T16:37:15.942] [INFO] prod - Se limpió la colección de productos
-[2024-12-09T16:40:28.570] [INFO] prod - Se limpió la colección de productos
-[2024-12-09T16:44:55.925] [INFO] prod - Se limpió la colección de productos
-[2024-12-11T09:25:44.382] [INFO] test - Se limpió la colección de productos
-[2024-12-11T09:32:30.627] [INFO] test - Se limpió la colección de productos
-[2024-12-11T09:35:05.881] [INFO] test - Se limpió la colección de productos
-[2024-12-11T15:34:16.174] [INFO] prod - Se limpió la colección de productos
-[2024-12-11T15:34:16.184] [INFO] prod - Se limpió la colección de productos
-[2024-12-11T15:37:04.939] [INFO] prod - {
-  title: 'Modern Steel Soap',
-  description: 'New mint green Shirt with ergonomic design for hasty comfort',
-  code: 930,
-  price: '198.90',
-  category: 'Books',
-  stock: 22,
-  status: true,
-  slug: 'laborum-decet-terga',
+[2024-12-12T10:36:53.345] [INFO] prod - Productos obtenidos con éxito
+[2024-12-12T10:36:53.351] [INFO] prod - {
+  status: 200,
+  message: 'Success',
+  data: {
+    docs: [],
+    totalDocs: 0,
+    limit: 10,
+    totalPages: 1,
+    page: 1,
+    pagingCounter: 1,
+    hasPrevPage: false,
+    hasNextPage: false,
+    prevPage: null,
+    nextPage: null
+  }
+}
+[2024-12-12T10:39:13.465] [INFO] prod - {
+  title: 'Licensed Concrete Ball',
+  description: 'Ergonomic Chips made with Granite for all-day snoopy support',
+  code: 647,
+  price: '557.05',
+  category: 'Toys',
+  stock: 48,
+  status: false,
+  slug: 'confero-campana-tempora',
   thumbnails: []
 }
-[2024-12-11T15:37:54.753] [INFO] prod - Se limpió la colección de productos
-[2024-12-11T15:37:54.766] [INFO] prod - Se limpió la colección de productos
+[2024-12-12T10:39:13.630] [INFO] prod - Productos obtenidos con éxito
+[2024-12-12T10:39:13.634] [INFO] prod - {
+  status: 200,
+  message: 'Success',
+  data: {
+    docs: [],
+    totalDocs: 0,
+    limit: 10,
+    totalPages: 1,
+    page: 1,
+    pagingCounter: 1,
+    hasPrevPage: false,
+    hasNextPage: false,
+    prevPage: null,
+    nextPage: null
+  }
+}
+[2024-12-12T10:40:00.153] [INFO] prod - {
+  title: 'Rustic Granite Fish',
+  description: 'Stylish Salad designed to make you stand out with spiffy looks',
+  code: 940,
+  price: '347.35',
+  category: 'Jewelry',
+  stock: 87,
+  status: true,
+  slug: 'aspernatur-libero-spiculum',
+  thumbnails: []
+}
+[2024-12-12T10:40:00.183] [INFO] prod - {}
+[2024-12-12T10:40:00.352] [INFO] prod - Productos obtenidos con éxito
+[2024-12-12T10:40:00.358] [INFO] prod - {
+  status: 200,
+  message: 'Success',
+  data: {
+    docs: [],
+    totalDocs: 0,
+    limit: 10,
+    totalPages: 1,
+    page: 1,
+    pagingCounter: 1,
+    hasPrevPage: false,
+    hasNextPage: false,
+    prevPage: null,
+    nextPage: null
+  }
+}
+[2024-12-12T11:27:39.608] [INFO] prod - {
+  title: 'Rustic Wooden Shirt',
+  description: 'Our elephant-friendly Tuna ensures weird comfort for your pets',
+  code: 996,
+  price: '675.05',
+  category: 'Toys',
+  stock: 52,
+  status: true,
+  slug: 'toties-vix-utilis',
+  thumbnails: []
+}
+[2024-12-12T11:27:39.640] [INFO] prod - {}
+[2024-12-12T11:27:39.806] [INFO] prod - Productos obtenidos con éxito
+[2024-12-12T11:27:39.810] [INFO] prod - {
+  status: 200,
+  message: 'Success',
+  data: {
+    docs: [],
+    totalDocs: 0,
+    limit: 10,
+    totalPages: 1,
+    page: 1,
+    pagingCounter: 1,
+    hasPrevPage: false,
+    hasNextPage: false,
+    prevPage: null,
+    nextPage: null
+  }
+}
+[2024-12-12T11:34:36.920] [INFO] prod - {
+  title: 'Electronic Wooden Towels',
+  description: 'Discover the peacock-like agility of our Sausages, perfect for red users',
+  code: 625,
+  price: '332.09',
+  category: 'Sports',
+  stock: 17,
+  status: true,
+  slug: 'ullus-comes-cras',
+  thumbnails: []
+}
+[2024-12-12T11:34:36.931] [INFO] prod - {}
+[2024-12-12T11:34:37.111] [INFO] prod - Productos obtenidos con éxito
+[2024-12-12T11:34:37.115] [INFO] prod - {
+  status: 200,
+  message: 'Success',
+  data: {
+    docs: [],
+    totalDocs: 0,
+    limit: 10,
+    totalPages: 1,
+    page: 1,
+    pagingCounter: 1,
+    hasPrevPage: false,
+    hasNextPage: false,
+    prevPage: null,
+    nextPage: null
+  }
+}
+[2024-12-12T11:47:04.793] [INFO] prod - {
+  title: 'Incredible Granite Gloves',
+  description: 'New Salad model with 78 GB RAM, 646 GB storage, and likable features',
+  code: 255,
+  price: '790.19',
+  category: 'Sports',
+  stock: 68,
+  status: true,
+  slug: 'terra-tergiversatio-dapifer',
+  thumbnails: []
+}
+[2024-12-12T11:47:04.803] [INFO] prod - {}
+[2024-12-12T11:47:05.370] [INFO] prod - Productos obtenidos con éxito
+[2024-12-12T11:47:05.376] [INFO] prod - {
+  status: 200,
+  message: 'Success',
+  data: {
+    docs: [],
+    totalDocs: 0,
+    limit: 10,
+    totalPages: 1,
+    page: 1,
+    pagingCounter: 1,
+    hasPrevPage: false,
+    hasNextPage: false,
+    prevPage: null,
+    nextPage: null
+  }
+}
+[2024-12-12T11:50:31.070] [INFO] prod - {
+  title: 'Electronic Fresh Shoes',
+  description: 'New silver Table with ergonomic design for wrong comfort',
+  code: 616,
+  price: '445.79',
+  category: 'Kids',
+  stock: 85,
+  status: true,
+  slug: 'strues-eaque-adeptio',
+  thumbnails: []
+}
+[2024-12-12T11:50:31.079] [INFO] prod - {}
+[2024-12-12T11:50:31.613] [INFO] prod - Productos obtenidos con éxito
+[2024-12-12T11:50:31.616] [INFO] prod - {
+  status: 200,
+  message: 'Success',
+  data: {
+    docs: [],
+    totalDocs: 0,
+    limit: 10,
+    totalPages: 1,
+    page: 1,
+    pagingCounter: 1,
+    hasPrevPage: false,
+    hasNextPage: false,
+    prevPage: null,
+    nextPage: null
+  }
+}
+[2024-12-12T11:56:02.323] [INFO] prod - {
+  title: 'Handcrafted Rubber Gloves',
+  description: 'New mint green Cheese with ergonomic design for spanish comfort',
+  code: 309,
+  price: '576.19',
+  category: 'Shoes',
+  stock: 85,
+  status: false,
+  slug: 'spectaculum-aer-officiis',
+  thumbnails: []
+}
+[2024-12-12T11:56:02.335] [INFO] prod - {}
+[2024-12-12T11:56:02.491] [INFO] prod - Productos obtenidos con éxito
+[2024-12-12T11:56:02.494] [INFO] prod - {
+  status: 200,
+  message: 'Success',
+  data: {
+    docs: [],
+    totalDocs: 0,
+    limit: 10,
+    totalPages: 1,
+    page: 1,
+    pagingCounter: 1,
+    hasPrevPage: false,
+    hasNextPage: false,
+    prevPage: null,
+    nextPage: null
+  }
+}
+[2024-12-12T11:57:14.912] [INFO] prod - {
+  title: 'Ergonomic Granite Shoes',
+  description: 'The sleek and sad Sausages comes with silver LED lighting for smart functionality',
+  code: 301,
+  price: '410.09',
+  category: 'Baby',
+  stock: 70,
+  status: false,
+  slug: 'audeo-repudiandae-volubilis',
+  thumbnails: []
+}
+[2024-12-12T11:57:14.922] [INFO] prod - {}
+[2024-12-12T11:57:15.093] [INFO] prod - Productos obtenidos con éxito
+[2024-12-12T11:57:15.097] [INFO] prod - {
+  status: 200,
+  message: 'Success',
+  data: {
+    docs: [],
+    totalDocs: 0,
+    limit: 10,
+    totalPages: 1,
+    page: 1,
+    pagingCounter: 1,
+    hasPrevPage: false,
+    hasNextPage: false,
+    prevPage: null,
+    nextPage: null
+  }
+}
+[2024-12-12T12:01:13.560] [INFO] prod - {
+  title: 'Unbranded Metal Fish',
+  description: 'Ergonomic Pants made with Metal for all-day enchanting support',
+  code: 493,
+  price: '567.35',
+  category: 'Clothing',
+  stock: 59,
+  status: true,
+  slug: 'tolero-porro-subito',
+  thumbnails: []
+}
+[2024-12-12T12:01:13.715] [INFO] prod - Productos obtenidos con éxito
+[2024-12-12T12:01:13.718] [INFO] prod - {
+  status: 200,
+  message: 'Success',
+  data: {
+    docs: [],
+    totalDocs: 0,
+    limit: 10,
+    totalPages: 1,
+    page: 1,
+    pagingCounter: 1,
+    hasPrevPage: false,
+    hasNextPage: false,
+    prevPage: null,
+    nextPage: null
+  }
+}
+[2024-12-12T12:01:41.141] [INFO] prod - {
+  title: 'Handcrafted Plastic Car',
+  description: "Davis - Dibbert's most advanced Computer technology increases elementary capabilities",
+  code: 151,
+  price: '494.09',
+  category: 'Grocery',
+  stock: 23,
+  status: true,
+  slug: 'inflammatio-avarus-cervus',
+  thumbnails: []
+}
+[2024-12-12T12:01:41.150] [INFO] prod - undefined
+[2024-12-12T12:01:41.328] [INFO] prod - Productos obtenidos con éxito
+[2024-12-12T12:01:41.331] [INFO] prod - {
+  status: 200,
+  message: 'Success',
+  data: {
+    docs: [],
+    totalDocs: 0,
+    limit: 10,
+    totalPages: 1,
+    page: 1,
+    pagingCounter: 1,
+    hasPrevPage: false,
+    hasNextPage: false,
+    prevPage: null,
+    nextPage: null
+  }
+}
+[2024-12-12T12:32:12.038] [INFO] prod - {
+  title: 'Oriental Soft Tuna',
+  description: 'New magenta Keyboard with ergonomic design for prickly comfort',
+  code: 738,
+  price: '377.19',
+  category: 'Computers',
+  stock: 32,
+  status: false,
+  slug: 'sufficio-nulla-argumentum',
+  thumbnails: []
+}
+[2024-12-12T12:32:12.047] [INFO] prod - {}
+[2024-12-12T12:32:12.177] [INFO] prod - Productos obtenidos con éxito
+[2024-12-12T12:32:12.180] [INFO] prod - {
+  status: 200,
+  message: 'Success',
+  data: {
+    docs: [],
+    totalDocs: 0,
+    limit: 10,
+    totalPages: 1,
+    page: 1,
+    pagingCounter: 1,
+    hasPrevPage: false,
+    hasNextPage: false,
+    prevPage: null,
+    nextPage: null
+  }
+}
+[2024-12-12T15:03:53.012] [INFO] prod - {
+  title: 'Unbranded Frozen Soap',
+  description: 'Savor the zesty essence in our Shoes, designed for devoted culinary adventures',
+  code: 721,
+  price: '900.30',
+  category: 'Health',
+  stock: 32,
+  status: false,
+  slug: 'quo-degenero-illo',
+  thumbnails: []
+}
+[2024-12-12T15:03:53.020] [INFO] prod - {}
+[2024-12-12T15:03:53.148] [INFO] prod - Productos obtenidos con éxito
+[2024-12-12T15:03:53.150] [INFO] prod - {
+  status: 200,
+  message: 'Success',
+  data: {
+    docs: [],
+    totalDocs: 0,
+    limit: 10,
+    totalPages: 1,
+    page: 1,
+    pagingCounter: 1,
+    hasPrevPage: false,
+    hasNextPage: false,
+    prevPage: null,
+    nextPage: null
+  }
+}
+[2024-12-12T15:09:44.514] [INFO] prod - env---: { email: 'admin@example.com', password: 'admin' }
+[2024-12-12T15:09:44.717] [INFO] prod - {
+  title: 'Fantastic Soft Pants',
+  description: 'Experience the orchid brilliance of our Ball, perfect for fine environments',
+  code: 134,
+  price: '695.20',
+  category: 'Automotive',
+  stock: 65,
+  status: true,
+  slug: 'vindico-corrupti-cauda',
+  thumbnails: []
+}
+[2024-12-12T15:09:44.727] [INFO] prod - {}
+[2024-12-12T15:09:44.923] [INFO] prod - Productos obtenidos con éxito
+[2024-12-12T15:09:44.929] [INFO] prod - {
+  status: 200,
+  message: 'Success',
+  data: {
+    docs: [],
+    totalDocs: 0,
+    limit: 10,
+    totalPages: 1,
+    page: 1,
+    pagingCounter: 1,
+    hasPrevPage: false,
+    hasNextPage: false,
+    prevPage: null,
+    nextPage: null
+  }
+}
