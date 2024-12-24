@@ -1,7 +1,23 @@
-import mongoose from 'mongoose';
-import ProductDAO from '../dao/mongo/ProductDAO.js';
+import ProductDAO from '../../dao/mongo/ProductDAO.js';
+import { faker } from "@faker-js/faker";
+import test, { before, after, describe, beforeEach } from "node:test";
 import assert from 'node:assert';
-import logger from '../../logs/app.logs.js';
+import mongoose from 'mongoose';
+import logger from '../../../logs/app.logs.js';
+
+const newMockProduct = () => {
+    return {
+        title: faker.commerce.productName(),
+        description: faker.commerce.productDescription(),
+        code: faker.number.int({ min:101, max: 1000 }), // 42
+        price: faker.commerce.price(),
+        category: faker.commerce.department(),
+        stock: faker.number.int({ max: 90 }),
+        status: faker.datatype.boolean(),
+        slug: faker.lorem.slug(),
+        thumbnails: []
+    };
+}
 
 describe('Tests unitarios de ProductDAO', () => {
     let productDAO;
@@ -16,7 +32,6 @@ describe('Tests unitarios de ProductDAO', () => {
     beforeEach(async () => {
         // Limpiar la colección de productos antes de cada test
         await mongoose.connection.collections['products'].deleteMany({});
-        logger.info('Se limpió la colección de productos');
     });
 
     after(async () => {
@@ -24,29 +39,21 @@ describe('Tests unitarios de ProductDAO', () => {
         await mongoose.disconnect();
     });
 
-    it('Debería retornar todos los Products de la colección', async () => {
+    test('Debería retornar todos los Products de la colección', async () => {
         const response = await productDAO.getViews();
         assert.equal(Array.isArray(response), true);
         //assert.equal(response.length).to.be.equal(0);
         assert.equal(response.length, 0);
     });
 
-    it('Debería crear un product', async () => {
-        const newProductTest = {
-            title: "Producto de prueba",
-            description: "Descripción de prueba",
-            code: "123",
-            price: 100,
-            category: "test",
-            stock: 10,
-            status: true,
-            slug: "producto_de_prueba",
-            thumbnails: []
-        };
+    test('Debería crear un product', async () => {
+        const newProductTest = newMockProduct();
+        logger.info(newProductTest);
+
         const product = await productDAO.create(newProductTest);
 		const response = await productDAO.getViews();
+        
         assert.ok(product._id);
-        // assert.fail(response.asdasd)
 		assert.equal(response.length, 1);
         assert.equal(typeof product, 'object');
         assert.equal(product.title, newProductTest.title);

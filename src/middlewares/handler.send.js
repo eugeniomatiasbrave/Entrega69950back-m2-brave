@@ -13,6 +13,7 @@ const handlerSend = (req, res, next) => {
 	res.sendConflict = (error) => httpResponse.Conflict(res, error);
 	res.sendUnauthorized = (error) => httpResponse.Unauthorized(res, error);
     res.sendServerError = (error) => httpResponse.ServerError(res, error);
+	res.sendDatabaseError = (error) => httpResponse.DatabaseError(res, error);
     next();
 };
 

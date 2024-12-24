@@ -8,7 +8,8 @@ const HttpStatus = {
 	FORBIDDEN: 403,
 	NOT_FOUND: 404,
 	CONFLICT: 409,
-	SERVER_ERROR: 500
+	SERVER_ERROR: 500,
+	DATABASE_ERROR: 503
 };
 
 class HttpResponse {
@@ -104,6 +105,14 @@ class HttpResponse {
 		return res.status(HttpStatus.SERVER_ERROR).json({
 			status: HttpStatus.SERVER_ERROR,
 			message: "Ocurrió un error en el servidor",
+			error: error.name,
+		});
+	};
+
+	DatabaseError = (res, error) =>{
+		return res.status(HttpStatus.DATABASE_ERROR).json({
+			status: HttpStatus.DATABASE_ERROR,
+			message: "Ocurrió un error en la base de datos",
 			error: error.name,
 		});
 	};

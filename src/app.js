@@ -11,6 +11,7 @@ import __dirname from "./utils.js";
 import ViewsRouter from "./routes/ViewsRouter.js";
 import SessionsRouter from "./routes/SessionsRouter.js";
 import productsRouter from "./routes/products.router.js";
+import usersRouter from "./routes/users.router.js";
 import cartsRouter from "./routes/carts.router.js";
 import usersMocksRouter from "./routes/usersMocks.router.js";
 import swaggerUI from "swagger-ui-express";
@@ -28,7 +29,7 @@ import { info } from "./docs/info.js";
   const specs = swaggerJSDoc(info);
   app.use("/docs", swaggerUI.serve, swaggerUI.setup(specs));
 
-  const PORT = config.app.PORT || 8083;
+  const PORT = config.app.PORT;
 
   app.use(helmet()); // Usar helmet para mejorar la seguridad
   
@@ -77,13 +78,14 @@ import { info } from "./docs/info.js";
   //Rutas
   app.use("/", ViewsRouter);
   app.use("/api/products", productsRouter);
+  app.use("/api/users", usersRouter)
   app.use("/api/carts", cartsRouter);
   app.use("/api/sessions", SessionsRouter);
   app.use("/api/mockingtoys", usersMocksRouter);
 
   // Middleware de errores
-  app.use(handlerError);
-  app.use(handlerSend);
+ app.use(handlerError);
+ app.use(handlerSend);
 
   export { app, server };
   

@@ -1,7 +1,7 @@
-import ProductDAO from '../dao/mongo/ProductDAO.js';
-import { expect } from 'chai';
 import mongoose from 'mongoose';
-import logger from '../../logs/app.logs.js';
+import ProductDAO from '../../dao/mongo/ProductDAO.js';
+import assert from 'node:assert';
+import logger from '../../../logs/app.logs.js';
 
 describe('Tests unitarios de ProductDAO', () => {
     let productDAO;
@@ -26,8 +26,9 @@ describe('Tests unitarios de ProductDAO', () => {
 
     it('Debería retornar todos los Products de la colección', async () => {
         const response = await productDAO.getViews();
-        expect(Array.isArray(response)).to.be.equal(true);
-        expect(response.length).to.be.equal(0);
+        assert.equal(Array.isArray(response), true);
+        //assert.equal(response.length).to.be.equal(0);
+        assert.equal(response.length, 0);
     });
 
     it('Debería crear un product', async () => {
@@ -44,19 +45,19 @@ describe('Tests unitarios de ProductDAO', () => {
         };
         const product = await productDAO.create(newProductTest);
 		const response = await productDAO.getViews();
-        expect(product).to.have.property('_id');
-		expect(response).to.have.lengthOf(1);
-        expect(product).to.be.an('object');
-        expect(product.title).to.be.equal(newProductTest.title);
-        expect(product.description).to.be.equal(newProductTest.description);
-        expect(product.code).to.be.equal(newProductTest.code);
-        expect(product.price).to.be.equal(newProductTest.price);
-        expect(product.category).to.be.equal(newProductTest.category);
-        expect(product.stock).to.be.equal(newProductTest.stock);
-        expect(product.status).to.be.equal(newProductTest.status);
-        expect(product.slug).to.be.equal(newProductTest.slug);
-        expect(product.thumbnails).to.be.an('array');
-        expect(product.thumbnails).to.be.lengthOf(0);
+        assert.ok(product._id);
+        // assert.fail(response.asdasd)
+		assert.equal(response.length, 1);
+        assert.equal(typeof product, 'object');
+        assert.equal(product.title, newProductTest.title);
+        assert.equal(product.description, newProductTest.description);
+        assert.equal(product.code, newProductTest.code);
+        assert.equal(product.price, newProductTest.price);
+        assert.equal(product.category, newProductTest.category);
+        assert.equal(product.stock, newProductTest.stock);
+        assert.equal(product.status, newProductTest.status);
+        assert.equal(product.slug, newProductTest.slug);
+        assert.equal(typeof product.thumbnails, 'object');
+        assert.equal(product.thumbnails.length, 0);  
     });
-
 });

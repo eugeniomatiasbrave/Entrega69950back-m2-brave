@@ -2,7 +2,7 @@ import { Command } from "commander";
 import { config } from "dotenv";
 
 const program = new Command();
-program.requiredOption('-m, --mode <mode>','Server mode','prod')
+program.requiredOption('-m, --mode <mode>','Server mode',  process.env.MODE || 'prod')
 program.parse();
 
 const options = program.opts();
@@ -17,6 +17,7 @@ export default {
 		PORT: process.env.PORT || 8080,
 		ADMIN_USER : process.env.ADMIN_EMAIL,
         ADMIN_PWD : process.env.ADMIN_PASSWORD,
+		ADMIN_EMAIL: process.env.ADMIN_EMAIL,
 		MODE: options.mode
 	},	
 	mongo: {

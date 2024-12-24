@@ -1,4 +1,63 @@
 paths:
+  /api/sessions/register:
+    post:
+      tags:
+        - Sessions
+      summary: Registrar un nuevo usuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  example: John
+                lastName:
+                  type: string
+                  example: Doe
+                email:
+                  type: string
+                  example: john.doe@example.com
+                birthDate:
+                  type: string
+                  format: date
+                  example: 1990-01-01
+                password:
+                  type: string
+                  example: password123
+        required: true
+      responses:
+        200:
+          description: Registro exitoso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Registered
+        400:
+          description: Error en los datos proporcionados
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Todos los campos son obligatorios
+        500:
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Error al registrar el usuario
   /api/sessions/login:
     post:
       tags:
@@ -54,6 +113,204 @@ paths:
                   message:
                     type: string
                     example: Error al iniciar sesión
+  /api/sessions/current:
+    get:
+      tags:
+        - Sessions
+      summary: Obtener el usuario actual
+      responses:
+        200:
+          description: Usuario actual obtenido con éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  role:
+                    type: string
+        401:
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Not logged in
+  /api/sessions/logout:
+    get:
+      tags:
+        - Sessions
+      summary: Cerrar sesión
+      responses:
+        200:
+          description: Sesión cerrada con éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Logged out successfully
+        401:
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+  /api/users:
+    get:
+      tags:
+        - Users
+      summary: Obtener todos los usuarios
+      responses:
+        200:
+          description: Lista de usuarios obtenida con éxito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        401:
+          description: No autorizado
+        500:
+          description: Error del servidor
+    post:
+      tags:
+        - Users
+      summary: Crear un nuevo usuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  example: JJ
+                lastName:
+                  type: string
+                  example: DD
+                email:
+                  type: string
+                  example: jj.dd@example.com
+                birthDate:
+                  type: string
+                  format: date
+                  example: 1990-01-01
+                password:
+                  type: string
+                  example: JJ123
+        required: true
+      responses:
+        200:
+          description: Usuario creado con éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User created
+        400:
+          description: Error en los datos proporcionados
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Todos los campos son obligatorios
+        500:
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Error al crear el usuario
+  /api/users/{uid}:
+    get:
+      tags:
+        - Users
+      summary: Obtener un usuario por ID
+      parameters:
+        - in: path
+          name: uid
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Usuario obtenido con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        404:
+          description: Usuario no encontrado
+        500:
+          description: Error del servidor
+    put:
+      tags:
+        - Users
+      summary: Actualizar un usuario por ID
+      parameters:
+        - in: path
+          name: uid
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        200:
+          description: Usuario actualizado con éxito
+        400:
+          description: Datos inválidos
+        404:
+          description: Usuario no encontrado
+        500:
+          description: Error del servidor
+    delete:
+      tags:
+        - Users
+      summary: Eliminar un usuario por ID
+      parameters:
+        - in: path
+          name: uid
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Usuario eliminado con éxito
+        404:
+          description: Usuario no encontrado
+        500:
+          description: Error del servidor
+
   /api/products:
     post:
       tags:

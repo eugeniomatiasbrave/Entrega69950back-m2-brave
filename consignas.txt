@@ -1,3 +1,13 @@
+// ENTREGA FINAL ///
+
+1- Documentar con Swagger el módulo de “Users”.
+2- Desarrollar los tests funcionales para todos los endpoints del router “adoption.router.js”.
+3- Crear una imagen de Docker.Desarrollar el Dockerfile para generar una imagen del proyecto.
+4- Subir la imagen de Docker a Dockerhub y añadir en un ReadMe.md al proyecto que contenga el link de dicha imagen.
+
+Para repasar Docker, se recomienda revisar la clase 5 “Clusters & Escalabilidad”.
+
+
 // PREENTREGA 1 MODULO 3 //
 
 // Se debe entregar

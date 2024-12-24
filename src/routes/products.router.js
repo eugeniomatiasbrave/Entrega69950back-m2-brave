@@ -9,7 +9,7 @@ class ProductsRouter extends BaseRouter {
     init() {
         this.get('/', ['PUBLIC'], executePolicies(['PUBLIC']), productsController.getProducts);
         this.get('/:pid', ['PUBLIC'], executePolicies(['PUBLIC']), productsController.getProductById);
-        this.post('/', ['ADMIN'], executePolicies(['ADMIN']), uploader.array('thumbnail', 3), productsController.createProduct);
+        this.post('/', ['ADMIN'],  uploader.array('thumbnail', 3), executePolicies(['ADMIN']),productsController.createProduct);
         this.delete('/:pid', ['ADMIN'], executePolicies(['ADMIN']), productsController.deleteProduct);
         this.put('/:pid', ['ADMIN'], executePolicies(['ADMIN']), productsController.updateProduct);
         this.get('/detail/:pid', ['PUBLIC', 'USER'], executePolicies(['PUBLIC', 'USER']), viewsController.renderProductDetail);
